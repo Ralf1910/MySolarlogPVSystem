@@ -51,10 +51,10 @@ class BSR extends IPSModule {
 
 		// Nächstes Abholdatum für die BSR aktualisieren
 		foreach ($AbholungHausmuell as &$HausmuellTermin) {
-			$dateTimestampNow	= time();
+			$dateTimestampNow	= strtotime($heute);
 			$dateTimestampHausmuellTermin	= strtotime($HausmuellTermin);
 
-			if ($dateTimestampHausmuellTermin > $dateTimestampNow) {
+			if ($dateTimestampHausmuellTermin >= $dateTimestampNow) {
 				SetValue($this->GetIDForIdent("BSRNextDate"), $dateTimestampHausmuellTermin);
 				SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Am ".$HausmuellTermin);
 				if (strcmp($heute, 		 $HausmuellTermin) == 0) 	SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Heute");
@@ -69,10 +69,10 @@ class BSR extends IPSModule {
 
 		// Nächstes Abholdatum für den grünen Punkt aktualisieren
 		foreach ($AbholungWertstoffe as &$WertstoffeTermin) {
-			$dateTimestampNow	= time();
+			$dateTimestampNow	= strtotime($heute);
 			$dateTimestampWertstoffeTermin	= strtotime($WertstoffeTermin);
 
-			if ($dateTimestampWertstoffeTermin > $dateTimestampNow) {
+			if ($dateTimestampWertstoffeTermin >= $dateTimestampNow) {
 				SetValue($this->GetIDForIdent("GruenerPunktNextDate"), $dateTimestampWertstoffeTermin);
 				SetValue($this->GetIDForIdent("GruenerPunktAbholungAnzeige"), "Am ".$WertstoffeTermin);
 				if (strcmp($heute, 		 $WertstoffeTermin) == 0) 	SetValue($this->GetIDForIdent("GruenerPunktAbholungAnzeige"), "Heute");
