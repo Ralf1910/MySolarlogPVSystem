@@ -11,7 +11,7 @@ class SolarlogPVSystem extends IPSModule {
 		$archiv = IPS_GetInstanceIDByName("Archiv", 0 );
 		// Verbraucher, Erzeuger und Batteriedaten konfigurieren
 		$this->RegisterPropertyInteger("Archiv",$archiv);
-		$this->RegisterPropertyInteger("Updates",1);
+		$this->RegisterPropertyInteger("Update",1);
 		$this->RegisterPropertyInteger("Leistung", 0);
 		$this->RegisterPropertyInteger("String1", 0);
 		$this->RegisterPropertyInteger("String2", 0);
