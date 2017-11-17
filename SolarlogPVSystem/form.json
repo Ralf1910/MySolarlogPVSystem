@@ -12,7 +12,7 @@
 	{ "type": "ValidationTextBox", "name": "Password", "caption": "Passwort" },
 	{ "type": "ValidationTextBox", "name": "RemoteDir", "caption": "Remote Verzeichnis" },
 	{ "type": "ValidationTextBox", "name": "LocalDir", "caption": "Lokales Verzeichnis" },
-	{ "type": "Label", "label": "Importdaten für die CSV Datei." },
+	{ "type": "Label", "label": "Importdaten für die CSV Datei (Spalte A=0)." },
 	{ "type": "ValidationTextBox", "name": "WR1-Pac", "caption": "WR1-Pac (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR1-Uac", "caption": "WR1-Uac (Spalte)" },  
 	{ "type": "ValidationTextBox", "name": "WR1-DaySum", "caption": "WR1-DaySum (Spalte)" },
