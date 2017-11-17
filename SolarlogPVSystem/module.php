@@ -22,6 +22,15 @@ class SolarlogPVSystem extends IPSModule {
 		$this->RegisterPropertyString("LocalDir", "");
 		$this->RegisterPropertyString("WR1Pac", "");
 		$this->RegisterPropertyString("WR1DaySum", "");
+		$this->RegisterPropertyString("WR1Status", "");
+		$this->RegisterPropertyString("WR1Error", "");
+		$this->RegisterPropertyString("WR1Pdc1", "");
+		$this->RegisterPropertyString("WR1Pdc2", "");
+		$this->RegisterPropertyString("WR1Pdc3", "");
+		$this->RegisterPropertyString("WR1Udc1", "");
+		$this->RegisterPropertyString("WR1Udc2", "");
+		$this->RegisterPropertyString("WR1Udc3", "");
+		$this->RegisterPropertyString("WR1Uac", "");
 				
 		// Updates einstellen
 		$this->RegisterTimer("Update", 60*1000, 'PV_Update($_IPS[\'TARGET\']);');
