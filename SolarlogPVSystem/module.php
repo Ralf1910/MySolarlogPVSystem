@@ -164,7 +164,7 @@ class SolarlogPVSystem extends IPSModule {
 							$monatsWerte[$row]['WR2Udc2'] 	= $csvdata[$this->ReadPropertyString("WR2Udc2")];
 							$monatsWerte[$row]['WR2Udc3'] 	= $csvdata[$this->ReadPropertyString("WR2Udc3")];
 							$monatsWerte[$row]['WR2Uac'] 	= $csvdata[$this->ReadPropertyString("WR2Uac")];
-							print_r($monatsWerte[$row]);
+							//print_r($monatsWerte[$row]);
 							$row++;
 						}  // if
 					 }  // while
