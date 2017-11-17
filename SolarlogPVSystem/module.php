@@ -21,7 +21,7 @@ class SolarlogPVSystem extends IPSModule {
 		$this->RegisterPropertyString("RemoteDir", "");
 		$this->RegisterPropertyString("LocalDir", "");
 		// Updates einstellen
-		$this->RegisterTimer("Update", 60*1000, 'PV_Update($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("Update", 600*1000, 'PV_Update($_IPS[\'TARGET\']);');
 	}
 	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
 	public function ApplyChanges() {
@@ -38,7 +38,7 @@ class SolarlogPVSystem extends IPSModule {
 			AC_SetAggregationType($archiv, $this->GetIDforIdent("pvErzeugteEnergie"), 1);
 		}
 		//Timerzeit setzen in Minuten
-		$this->SetTimerInterval("Update", 60*1000);
+		$this->SetTimerInterval("Update", 600*1000);
 	}
 	// Berechnung der jeweiligen Jahreswerte
 	private function RollierenderJahreswert(Integer $VariableID) {
