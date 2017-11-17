@@ -6,12 +6,21 @@
 	{ "type": "ValidationTextBox", "name": "String1", "caption": "Leistung String 1(kWp)" },
 	{ "type": "ValidationTextBox", "name": "String2", "caption": "Leistung String 2(kWp)" },
 	{ "type": "ValidationTextBox", "name": "String3", "caption": "Leistung String 3 (kWp)" },
+	{ "type": "Label", "label": "Connection Data für den FTP Server." },
 	{ "type": "ValidationTextBox", "name": "ServerAdresse", "caption": "Serveradresse" },
 	{ "type": "ValidationTextBox", "name": "Username", "caption": "Benutzer" },
 	{ "type": "ValidationTextBox", "name": "Password", "caption": "Passwort" },
 	{ "type": "ValidationTextBox", "name": "RemoteDir", "caption": "Remote Verzeichnis" },
 	{ "type": "ValidationTextBox", "name": "LocalDir", "caption": "Lokales Verzeichnis" },
-	{ "type": "ValidationTextBox", "name": "WR1-Pac", "caption": "WR1-Pac (Spalte)" }  
-	  
+	{ "type": "Label", "label": "Importdaten für die CSV Datei." },
+	{ "type": "ValidationTextBox", "name": "WR1-Pac", "caption": "WR1-Pac (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR1-Uac", "caption": "WR1-Uac (Spalte)" },  
+	{ "type": "ValidationTextBox", "name": "WR1-DaySum", "caption": "WR1-DaySum (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR1-Status", "caption": "WR1-Status (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR1-Error", "caption": "WR1-Error (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR1-Pdc1", "caption": "WR1-Pdc1 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR1-Pdc2", "caption": "WR1-Pdc2 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR1-Pdc3", "caption": "WR1-Pdc3 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR1-Udc3", "caption": "WR1-Udc3 (Spalte)" }
   ]
 }
