@@ -164,7 +164,6 @@ class SolarlogPVSystem extends IPSModule {
 							$monatsWerte[$row]['WR2Udc2'] 	= $csvdata[$this->ReadPropertyString("WR2Udc2")];
 							$monatsWerte[$row]['WR2Udc3'] 	= $csvdata[$this->ReadPropertyString("WR2Udc3")];
 							$monatsWerte[$row]['WR2Uac'] 	= $csvdata[$this->ReadPropertyString("WR2Uac")];
-							//print_r($monatsWerte[$row]);
 							$row++;
 						}  // if
 					 }  // while
@@ -173,7 +172,7 @@ class SolarlogPVSystem extends IPSModule {
 	  			}  // if handle
 		 	}  // if file exists
 		}  // for-schleife days
-        IPS_LogMessage($_IPS['SELF'], "Einlesen $csvFile fertig, Zeilen $row");
+        IPS_LogMessage($_IPS['SELF'], "Einlesen fertig, Zeilen $row");
 
 		/* Gesamtverbrauch zusammenaddieren
 		$aktuellerVerbrauchP 	= 	0;
