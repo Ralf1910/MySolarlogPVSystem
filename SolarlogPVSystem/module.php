@@ -124,13 +124,30 @@ class SolarlogPVSystem extends IPSModule {
 	     				   	$monatsWerte[$row]['time']   = $date_time->getTimestamp();
 
 						   	// Daten aus der CSV in das monatsWerte Array überführen
-							$monatsWerte[$row]['WR1Pac'] = $csvdata[getValue($this->ReadPropertyString("WR1Pac"))];
+							$monatsWerte[$row]['WR1Pac'] 	= $csvdata[$this->ReadPropertyString("WR1Pac")];
 							$monatsWerte[$row]['WR1DaySum'] = $csvdata[$this->ReadPropertyString("WR1DaySum")];
-							$monatsWerte[$row]['WR1Status'] = $csvdata[getValue($this->ReadPropertyString("WR1Status"))];
-							$monatsWerte[$row]['WR1Error'] = $csvdata[getValue($this->ReadPropertyString("WR1Error"))];
-							$monatsWerte[$row]['WR1Pdc1'] = $csvdata[getValue($this->ReadPropertyString("WR1Pdc1"))];
-							$monatsWerte[$row]['WR1Pdc2'] = $csvdata[getValue($this->ReadPropertyString("WR1Pdc2"))];
-							$monatsWerte[$row]['WR1Pdc3'] = $csvdata[getValue($this->ReadPropertyString("WR1Pdc3"))];
+							$monatsWerte[$row]['WR1Status'] = $csvdata[$this->ReadPropertyString("WR1Status")];
+							$monatsWerte[$row]['WR1Error'] 	= $csvdata[$this->ReadPropertyString("WR1Error")];
+							$monatsWerte[$row]['WR1Pdc1'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc1")];
+							$monatsWerte[$row]['WR1Pdc2'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc2")];
+							$monatsWerte[$row]['WR1Pdc3'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc3")];
+							$monatsWerte[$row]['WR1Udc1'] 	= $csvdata[$this->ReadPropertyString("WR1Udc1")];
+							$monatsWerte[$row]['WR1Udc2'] 	= $csvdata[$this->ReadPropertyString("WR1Udc2")];
+							$monatsWerte[$row]['WR1Udc3'] 	= $csvdata[$this->ReadPropertyString("WR1Udc3")];
+							$monatsWerte[$row]['WR1Uac'] 	= $csvdata[$this->ReadPropertyString("WR1Uac")];
+							
+							$monatsWerte[$row]['WR2Pac'] 	= $csvdata[$this->ReadPropertyString("WR2Pac")];
+							$monatsWerte[$row]['WR2DaySum'] = $csvdata[$this->ReadPropertyString("WR2DaySum")];
+							$monatsWerte[$row]['WR2Status'] = $csvdata[$this->ReadPropertyString("WR2Status")];
+							$monatsWerte[$row]['WR2Error'] 	= $csvdata[$this->ReadPropertyString("WR2Error")];
+							$monatsWerte[$row]['WR2Pdc1'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc1")];
+							$monatsWerte[$row]['WR2Pdc2'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc2")];
+							$monatsWerte[$row]['WR2Pdc3'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc3")];
+							$monatsWerte[$row]['WR2Udc1'] 	= $csvdata[$this->ReadPropertyString("WR2Udc1")];
+							$monatsWerte[$row]['WR2Udc2'] 	= $csvdata[$this->ReadPropertyString("WR2Udc2")];
+							$monatsWerte[$row]['WR2Udc3'] 	= $csvdata[$this->ReadPropertyString("WR2Udc3")];
+							$monatsWerte[$row]['WR2Uac'] 	= $csvdata[$this->ReadPropertyString("WR2Uac")];
+						
 							
   						    	IPS_LogMessage("SolarlogPVSystem", "Aktuelle Leistung ".$monatsWerte[$row]['WR1DaySum']." - ".$this->ReadPropertyString("WR1Pac")." - ".$csvdata[7]."\n");
 							$row++;
