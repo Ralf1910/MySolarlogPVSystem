@@ -23,7 +23,7 @@
 	{ "type": "ValidationTextBox", "name": "WR1Udc1", "caption": "WR1-Udc1 (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR1Udc2", "caption": "WR1-Udc2 (Spalte)" }, 
 	{ "type": "ValidationTextBox", "name": "WR1Udc3", "caption": "WR1-Udc3 (Spalte)" },
-	{ "type": "ValidationTextBox", "name": "WR1Uac", "caption": "WR2-Temp (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR1Temp", "caption": "WR1-Temp (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR1Uac", "caption": "WR1-Uac (Spalte)" }, 
 	  { "type": "Label", "label": "Importdaten für die CSV Datei (Wechselrichter 2)." },
 	{ "type": "ValidationTextBox", "name": "WR2Pac", "caption": "WR2-Pac (Spalte)" },
