@@ -21,8 +21,8 @@
 	{ "type": "ValidationTextBox", "name": "WR1Pdc2", "caption": "WR1-Pdc2 (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR1Pdc3", "caption": "WR1-Pdc3 (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR1Udc1", "caption": "WR1-Udc1 (Spalte)" },
-	{ "type": "ValidationTextBox", "name": "WR1Uac", "caption": "WR1-Udc2 (Spalte)" }, 
-	{ "type": "ValidationTextBox", "name": "WR1Uac", "caption": "WR1-Udc3 (Spalte)" }, 
+	{ "type": "ValidationTextBox", "name": "WR1Udc2", "caption": "WR1-Udc2 (Spalte)" }, 
+	{ "type": "ValidationTextBox", "name": "WR1Udc3", "caption": "WR1-Udc3 (Spalte)" }, 
 	{ "type": "ValidationTextBox", "name": "WR1Uac", "caption": "WR1-Uac (Spalte)" } 
   ]
 }
