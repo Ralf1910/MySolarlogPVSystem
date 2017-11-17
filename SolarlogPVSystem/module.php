@@ -127,7 +127,7 @@ class SolarlogPVSystem extends IPSModule {
 		$month=10;
 		$year=2017;
 		$monatsWerte = array();
-		
+		$row = 0;
 		for ($day=1; $day<=cal_days_in_month(CAL_GREGORIAN, $month, $year); $day++) {
 			$csvFile = $localDir."\9001\min".substr($year,2,2).str_pad($month, 2 ,'0', STR_PAD_LEFT).str_pad($day, 2 ,'0', STR_PAD_LEFT).".csv";
 
