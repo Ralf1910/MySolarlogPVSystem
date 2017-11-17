@@ -1,6 +1,6 @@
 {
-"id": "{4B94F042-3AE4-455D-92C4-0E30699737D4}",
-  "name": "BSR",
+"id": "{7F801406-A439-4EB0-992D-3D14C13F8BAD}",
+  "name": "SolarlogPVSystem",
   "type": 3,
   "vendor": "",
   "aliases": [
@@ -9,5 +9,5 @@
   "parentRequirements": [],
   "childRequirements": [],
   "implemented": [],
-  "prefix": "BSR"
+  "prefix": "PV"
 }
