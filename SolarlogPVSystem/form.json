@@ -2,10 +2,10 @@
   "elements":
   [
 	{ "type": "SelectInstance", "name": "Archiv", "caption": "Archiv" },
-	{ "type": "ValidationTextBox", "name": "Leistung", "caption": "Leistung (kWp)" },
-	{ "type": "ValidationTextBox", "name": "String1", "caption": "Leistung (kWp)" },
-	{ "type": "ValidationTextBox", "name": "String2", "caption": "Leistung (kWp)" },
-	{ "type": "ValidationTextBox", "name": "String3", "caption": "Leistung (kWp)" },
+	{ "type": "ValidationTextBox", "name": "Leistung", "caption": "Gesamtleistung (kWp)" },
+	{ "type": "ValidationTextBox", "name": "String1", "caption": "Leistung String 1(kWp)" },
+	{ "type": "ValidationTextBox", "name": "String2", "caption": "Leistung String 2(kWp)" },
+	{ "type": "ValidationTextBox", "name": "String3", "caption": "Leistung String 3 (kWp)" },
 	{ "type": "ValidationTextBox", "name": "ServerAdresse", "caption": "Serveradresse" },
 	{ "type": "ValidationTextBox", "name": "Username", "caption": "Benutzer" },
 	{ "type": "ValidationTextBox", "name": "Password", "caption": "Passwort" },
