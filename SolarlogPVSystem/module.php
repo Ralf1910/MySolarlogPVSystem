@@ -53,11 +53,11 @@ class SolarlogPVSystem extends IPSModule {
 	// Aktualisiert die Batteriedaten
 	public function Update() {
 		
-		$ftpServer   = getValue($this->ReadPropertyString("ServerAdresse"));
-		$ftpUserName = getValue($this->ReadPropertyString("Username"));
-		$ftpPassword = getValue($this->ReadPropertyString("Password")); 
-		$remoteDir   = getValue($this->ReadPropertyString("RemoteDir"));
-		$localDir    = getValue($this->ReadPropertyString("LocalDir"));
+		$ftpServer   = $this->ReadPropertyString("ServerAdresse");
+		$ftpUserName = $this->ReadPropertyString("Username");
+		$ftpPassword = $this->ReadPropertyString("Password"); 
+		$remoteDir   = $this->ReadPropertyString("RemoteDir");
+		$localDir    = $this->ReadPropertyString("LocalDir");
 		
 		// Daten vom FTP Server holen
 		$connID = ftp_connect($ftpServer);
