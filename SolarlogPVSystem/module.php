@@ -52,6 +52,45 @@ class SolarlogPVSystem extends IPSModule {
 	}
 	// Aktualisiert die Batteriedaten
 	public function Update() {
+		
+		$ftpServer   = getValue($this->ReadPropertyString("ServerAdresse"));
+		$ftpUserName = getValue($this->ReadPropertyString("Username"));
+		$ftpPassword = getValue($this->ReadPropertyString("Password")); 
+		$remoteDir   = getValue($this->ReadPropertyString("RemoteDir"));
+		$localDir    = getValue($this->ReadPropertyString("LocalDir"));
+		
+		// Daten vom FTP Server holen
+		$connID = ftp_connect($ftpServer);
+		
+		if ($connID != false) {
+			// Login mit Benutzername und Passwort
+			$loginResult = ftp_login($connID, $ftpUserName, $ftpPassword);
+			
+			IPS_LogMessage($_IPS['SELF'], "Prüfe FTP-Server Verzeichnis ".$remoteDir." auf neue Dateien.\n");
+	    		$remoteDirContent = ftp_nlist($connID, "./".$remoteDir);
+	    		foreach($remoteDirContent as $index2 => $remoteFile) {
+				if (substr($remoteFile, -3) == "csv") {
+					$localFile = $localDir.$remoteFile;
+		      			$localFile = str_replace("/","\\",$localFile);
+		      			$timeRemoteModified = ftp_mdtm($connID, $remoteFile );
+					if (file_exists($localFile)) $timeLocalModified = filemtime($localFile);
+			   		if (!file_exists($localFile) || $timeRemoteModified>$timeLocalModified) {
+			      			if (ftp_get($connID, $localFile, $remoteFile, FTP_BINARY)) {
+		   	 				IPS_LogMessage($_IPS['SELF'], $localFile." wurde erfolgreich geschrieben ");
+	         	   				touch($localFile, $timeRemoteModified);
+						} else {
+		    					IPS_LogMessage($_IPS['SELF'], "Bei Datei $localFile ist in Fehler ist aufgetreten\n");
+						}
+					}
+				}
+		 	}
+		} else {
+			IPS_LogMessage($_IPS['SELF'], "FTP Server nicht erreichbar!\n");
+		}
+
+		IPS_LogMessage($_IPS['SELF'],"Solarlog Dateien sind jetzt aktuell");
+		ftp_close($connID);
+
 		/* Gesamtverbrauch zusammenaddieren
 		$aktuellerVerbrauchP 	= 	0;
 		if ($this->ReadPropertyInteger("VerbraucherP1")>0) $aktuellerVerbrauchP += getValue($this->ReadPropertyInteger("VerbraucherP1"));
