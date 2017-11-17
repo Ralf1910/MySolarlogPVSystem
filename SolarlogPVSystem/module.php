@@ -65,8 +65,8 @@ class SolarlogPVSystem extends IPSModule {
 		$localDir    = $this->ReadPropertyString("LocalDir");
 		
 		// Daten vom FTP Server holen
-		$connID = ftp_connect($ftpServer);
-		
+		// $connID = ftp_connect($ftpServer);
+		$connID = false;
 		if ($connID != false) {
 			// Login mit Benutzername und Passwort
 			$loginResult = ftp_login($connID, $ftpUserName, $ftpPassword);
