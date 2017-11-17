@@ -21,7 +21,7 @@ class SolarlogPVSystem extends IPSModule {
 		$this->RegisterPropertyString("RemoteDir", "");
 		$this->RegisterPropertyString("LocalDir", "");
 		// Updates einstellen
-		$this->RegisterTimer("Update", 60*1000, 'PV_Update($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("Update", 3660*1000, 'PV_Update($_IPS[\'TARGET\']);');
 	}
 	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
 	public function ApplyChanges() {
