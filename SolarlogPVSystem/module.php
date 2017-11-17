@@ -135,7 +135,7 @@ class SolarlogPVSystem extends IPSModule {
 			  			if ($csvdata[0] != "#Datum" && $csvdata[0] != "#Date") {
 			  			   	if (strlen($csvdata[0]) == 8) $date_time = DateTime::createFromFormat('d.m.y H:i:s', $csvdata[0]." ".$csvdata[1]);
 			  			   	if (strlen($csvdata[0]) == 10) $date_time = DateTime::createFromFormat('d.m.Y H:i:s', $csvdata[0]." ".$csvdata[1]);
-	     				   	$monatsWerte[$row]['time']   = $date_time->getTimestamp();
+	     				   		$monatsWerte[$row]['time']   = $date_time->getTimestamp();
 
 						   	// Daten aus der CSV in das monatsWerte Array überführen
 							$monatsWerte[$row]['WR1Pac'] 	= $csvdata[$this->ReadPropertyString("WR1Pac")];
@@ -161,12 +161,10 @@ class SolarlogPVSystem extends IPSModule {
 							$monatsWerte[$row]['WR2Udc2'] 	= $csvdata[$this->ReadPropertyString("WR2Udc2")];
 							$monatsWerte[$row]['WR2Udc3'] 	= $csvdata[$this->ReadPropertyString("WR2Udc3")];
 							$monatsWerte[$row]['WR2Uac'] 	= $csvdata[$this->ReadPropertyString("WR2Uac")];
-						
-							
-  						    	IPS_LogMessage("SolarlogPVSystem", "Aktuelle Leistung ".$monatsWerte[$row]['WR1DaySum']." - ".$this->ReadPropertyString("WR1Pac")." - ".$csvdata[7]."\n");
 							$row++;
 						}  // if
 					 }  // while
+					IPS_LogMessage("SolarlogPVSystem", "Daten vom $csvFile eingelesen\n");
 	   		 	fclose($handle);
 	  			}  // if handle
 		 	}  // if file exists
