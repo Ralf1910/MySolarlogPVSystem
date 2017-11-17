@@ -123,8 +123,8 @@ class SolarlogPVSystem extends IPSModule {
 	     				   	$monatsWerte[$row]['time']   = $date_time->getTimestamp();
 
 						   	// Daten aus der CSV in das monatsWerte Array überführen
-							$monatsWerte[$row]['WR1Pac'] = $csvdata[$this->ReadPropertyInteger("WR1Pac")];
-							$monatsWerte[$row]['WR1DaySum'] = $csvdata[$this->ReadPropertyInteger("WR1DaySum")];										  
+							$monatsWerte[$row]['WR1Pac'] = $csvdata[getValue($this->ReadPropertyString("WR1Pac"))];
+							$monatsWerte[$row]['WR1DaySum'] = $csvdata[getValue($this->ReadPropertyString("WR1DaySum"))];										  
   						    	IPS_LogMessage("SolarlogPVSystem", "Aktuelle Leistung".$monatsWerte[$row]['WR1Pac']."\n");
 							$row++;
 						}  // if
