@@ -1,32 +1,27 @@
 <?
-//  Modul zur Simulation von Batterien mit verschiedenen
-//  Verbrauchern und Erzeugern
-//	Version 0.9
+//  Modul zum Darstellen von Solaranlagen mit allen Solarlog Daten
+//  
+//  Version 0.9
 //
 // ************************************************************
-class Batterie extends IPSModule {
+class SolarlogPVSystem extends IPSModule {
 	public function Create() {
 		// Diese Zeile nicht löschen.
 		parent::Create();
 		$archiv = IPS_GetInstanceIDByName("Archiv", 0 );
 		// Verbraucher, Erzeuger und Batteriedaten konfigurieren
 		$this->RegisterPropertyInteger("Archiv",$archiv);
-		$this->RegisterPropertyInteger("VerbraucherP1", 24149 /*[Energie\Haushalt\aktuelle Leistung HH]*/);
-		$this->RegisterPropertyInteger("VerbraucherW1", 26067 /*[Energie\Haushalt\Verbrauch letzte Minute HH]*/);
-		$this->RegisterPropertyInteger("VerbraucherP2", 16212 /*[Energie\Wärmepumpe\aktuelle Leistung WP]*/);
-		$this->RegisterPropertyInteger("VerbraucherW2", 32308 /*[Energie\Wärmepumpe\Verbrauch letzte Minute WP]*/);
-		$this->RegisterPropertyInteger("VerbraucherP3", 0);
-		$this->RegisterPropertyInteger("VerbraucherW3", 0);
-		$this->RegisterPropertyInteger("ErzeugerP1", 22545 /*[Energie\PV-Anlage Süd\aktuelle Leistung PS]*/);
-		$this->RegisterPropertyInteger("ErzeugerW1", 44022 /*[Energie\PV-Anlage Süd\Verbrauch letzte Minute PS]*/);
-		$this->RegisterPropertyInteger("ErzeugerP2", 16594 /*[Energie\PV-Anlage Nord\aktuelle Leistung PN]*/);
-		$this->RegisterPropertyInteger("ErzeugerW2", 45660 /*[Energie\PV-Anlage Nord\Verbrauch letzte Minute PN]*/);
-		$this->RegisterPropertyInteger("ErzeugerP3", 0);
-		$this->RegisterPropertyInteger("ErzeugerW3", 0);
-		$this->RegisterPropertyInteger("Kapazitaet", 13500);
-		$this->RegisterPropertyInteger("MaxLadeleistung", 7000);
+		$this->RegisterPropertyInteger("Leistung", 0);
+		$this->RegisterPropertyInteger("String1", 0);
+		$this->RegisterPropertyInteger("String2", 0);
+		$this->RegisterPropertyInteger("String3", 0);
+		$this->RegisterPropertyString("ServerAdresse", "");
+		$this->RegisterPropertyString("Username", "");
+		$this->RegisterPropertyString("Password", "");
+		$this->RegisterPropertyString("RemoteDir", "");
+		$this->RegisterPropertyString("LocalDir", "");
 		// Updates einstellen
-		$this->RegisterTimer("Update", 60*1000, 'BAT_Update($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("Update", 60*1000, 'PV_Update($_IPS[\'TARGET\']);');
 	}
 	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
 	public function ApplyChanges() {
@@ -34,35 +29,13 @@ class Batterie extends IPSModule {
 		parent::ApplyChanges();
 		if (IPS_GetKernelRunlevel ( ) == 10103) {
 			$archiv = IPS_GetInstanceIDByName("Archiv", 0 );
-			// Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werden
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("zyklen", "Batterie - Zyklen", "Float.BatterieZyklen", 30), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleLadeleistung", "Power - Ladeleistung", "Integer.Watt", 110), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleEinspeisung", "Power - Einspeisung", "Integer.Watt", 120), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleEigennutzung", "Power - Eigennutzung", "Integer.Watt", 130), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuellerNetzbezug", "Power - Netzbezug", "Integer.Watt", 140), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("eingespeisteEnergie", "Energie - eingespeist", "~Electricity", 210), true);
-			AC_SetAggregationType($archiv, $this->GetIDforIdent("eingespeisteEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("selbstverbrauchteEnergie", "Energie - direktverbraucht", "~Electricity", 220), true);
-			AC_SetAggregationType($archiv, $this->GetIDforIdent("selbstverbrauchteEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("bezogeneEnergie", "Energie - bezogen", "~Electricity", 230), true);
-			AC_SetAggregationType($archiv, $this->GetIDforIdent("bezogeneEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("gespeicherteEnergie", "Energie - gespeichert", "~Electricity", 240), true);
-			AC_SetAggregationType($archiv, $this->GetIDforIdent("gespeicherteEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("EVGV", "Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 310), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("EVGP", "Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 320), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeZyklen", "Pro Jahr - Zyklen", "Float.BatterieZyklen", 410), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEingespeisteEnergie", "Pro Jahr - Eingespeiste Energie", "~Electricity", 420), true);
-			AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeEingespeisteEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeSelbstverbrauchteEnergie", "Pro Jahr - Direktverbrauchte Energie", "~Electricity", 430), true);
-			AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeSelbstverbrauchteEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeBezogeneEnergie", "Pro Jahr - Bezogene Energie", "~Electricity", 440), true);
-			AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeBezogeneEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Pro Jahr - Gespeicherte Energie", "~Electricity", 450), true);
-			AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeGespeicherteEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEVGV", "Pro Jahr - Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 460), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEVGP", "Pro Jahr - Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 470), true);
+			// Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werd
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("pvLeistung", "PV - Aktuelle Leistung", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("pvLeistungString1", "PV - aktuelle Leistung String 1", "", 30), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("pvLeistungString2", "PV - aktuelle Leistung String 2", "", 40), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("pvLeistungString3", "PV - Aktuelle Leistung String 3", "", 50), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("pvErzeugteEnergie", "PV - erzeugte Energie", "", 60), true);
+			AC_SetAggregationType($archiv, $this->GetIDforIdent("pvErzeugteEnergie"), 1);
 		}
 		//Timerzeit setzen in Minuten
 		$this->SetTimerInterval("Update", 60*1000);
@@ -79,7 +52,7 @@ class Batterie extends IPSModule {
 	}
 	// Aktualisiert die Batteriedaten
 	public function Update() {
-		// Gesamtverbrauch zusammenaddieren
+		/* Gesamtverbrauch zusammenaddieren
 		$aktuellerVerbrauchP 	= 	0;
 		if ($this->ReadPropertyInteger("VerbraucherP1")>0) $aktuellerVerbrauchP += getValue($this->ReadPropertyInteger("VerbraucherP1"));
 		if ($this->ReadPropertyInteger("VerbraucherP2")>0) $aktuellerVerbrauchP += getValue($this->ReadPropertyInteger("VerbraucherP2"));
@@ -161,6 +134,6 @@ class Batterie extends IPSModule {
 			SetValue($this->GetIDforIdent("rollierendeEVGV"), $this->RollierenderJahreswert($this->GetIDforIdent("EVGV")));
 			SetValue($this->GetIDforIdent("rollierendeEVGP"), $this->RollierenderJahreswert($this->GetIDforIdent("EVGP")));
 			SetValue($this->GetIDforIdent("rollierendeZyklen"), $this->RollierenderJahreswert($this->GetIDforIdent("zyklen")));
-		}
+		} */
 	}
  }
