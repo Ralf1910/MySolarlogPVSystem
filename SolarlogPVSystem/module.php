@@ -31,6 +31,18 @@ class SolarlogPVSystem extends IPSModule {
 		$this->RegisterPropertyString("WR1Udc2", "");
 		$this->RegisterPropertyString("WR1Udc3", "");
 		$this->RegisterPropertyString("WR1Uac", "");
+		
+		$this->RegisterPropertyString("WR2Pac", "");
+		$this->RegisterPropertyString("WR2DaySum", "");
+		$this->RegisterPropertyString("WR2Status", "");
+		$this->RegisterPropertyString("WR2Error", "");
+		$this->RegisterPropertyString("WR2Pdc1", "");
+		$this->RegisterPropertyString("WR2Pdc2", "");
+		$this->RegisterPropertyString("WR2Pdc3", "");
+		$this->RegisterPropertyString("WR2Udc1", "");
+		$this->RegisterPropertyString("WR2Udc2", "");
+		$this->RegisterPropertyString("WR2Udc3", "");
+		$this->RegisterPropertyString("WR2Uac", "");
 				
 		// Updates einstellen
 		$this->RegisterTimer("Update", 60*1000, 'PV_Update($_IPS[\'TARGET\']);');
@@ -49,6 +61,8 @@ class SolarlogPVSystem extends IPSModule {
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("pvErzeugteEnergie", "PV - erzeugte Energie", "", 60), true);
 			AC_SetAggregationType($archiv, $this->GetIDforIdent("pvErzeugteEnergie"), 1);
 		}
+		
+		
 		//Timerzeit setzen in Minuten
 		$this->SetTimerInterval("Update", 60*1000);
 	}
