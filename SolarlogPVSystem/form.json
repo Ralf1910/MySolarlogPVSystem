@@ -12,7 +12,7 @@
 	{ "type": "ValidationTextBox", "name": "Password", "caption": "Passwort" },
 	{ "type": "ValidationTextBox", "name": "RemoteDir", "caption": "Remote Verzeichnis" },
 	{ "type": "ValidationTextBox", "name": "LocalDir", "caption": "Lokales Verzeichnis" },
-	{ "type": "Label", "label": "Importdaten für die CSV Datei (Spalte A=0)." },
+	{ "type": "Label", "label": "Importdaten für die CSV Datei (Wechselrichter 1)." },
 	{ "type": "ValidationTextBox", "name": "WR1Pac", "caption": "WR1-Pac (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR1DaySum", "caption": "WR1-DaySum (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR1Status", "caption": "WR1-Status (Spalte)" },
@@ -23,6 +23,18 @@
 	{ "type": "ValidationTextBox", "name": "WR1Udc1", "caption": "WR1-Udc1 (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR1Udc2", "caption": "WR1-Udc2 (Spalte)" }, 
 	{ "type": "ValidationTextBox", "name": "WR1Udc3", "caption": "WR1-Udc3 (Spalte)" }, 
-	{ "type": "ValidationTextBox", "name": "WR1Uac", "caption": "WR1-Uac (Spalte)" } 
+	{ "type": "ValidationTextBox", "name": "WR1Uac", "caption": "WR1-Uac (Spalte)" }, 
+	  { "type": "Label", "label": "Importdaten für die CSV Datei (Wechselrichter 2)." },
+	{ "type": "ValidationTextBox", "name": "WR2Pac", "caption": "WR1-Pac (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR2DaySum", "caption": "WR1-DaySum (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR2Status", "caption": "WR1-Status (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR2Error", "caption": "WR1-Error (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR2Pdc1", "caption": "WR1-Pdc1 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR2Pdc2", "caption": "WR1-Pdc2 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR2Pdc3", "caption": "WR1-Pdc3 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR2Udc1", "caption": "WR1-Udc1 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR2Udc2", "caption": "WR1-Udc2 (Spalte)" }, 
+	{ "type": "ValidationTextBox", "name": "WR2Udc3", "caption": "WR1-Udc3 (Spalte)" }, 
+	{ "type": "ValidationTextBox", "name": "WR2Uac", "caption": "WR1-Uac (Spalte)" } 
   ]
 }
