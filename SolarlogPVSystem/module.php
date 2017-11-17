@@ -92,6 +92,78 @@ class SolarlogPVSystem extends IPSModule {
 
 		IPS_LogMessage("SolarlogPVSystem","Solarlog Dateien sind jetzt aktuell");
 		ftp_close($connID);
+		
+		// Daten einlesen
+		$month=10;
+		$year=2017;
+		$monatsWerte = array();
+		
+		for ($day=1; $day<=cal_days_in_month(CAL_GREGORIAN, $month, $year); $day++) {
+			$csvFile = $localDir."\9001\min".substr($year,2,2).str_pad($month, 2 ,'0', STR_PAD_LEFT).str_pad($day, 2 ,'0', STR_PAD_LEFT).".csv";
+
+			if (file_exists($csvFile)) {
+				if (($handle = fopen($csvFile, "r")) !== FALSE) {
+					while (($csvdata = fgetcsv($handle, 0, ";")) !== FALSE) {
+	   		     		$num = count($csvdata);
+			  			if ($csvdata[0] != "#Datum" && $csvdata[0] != "#Date" && $num>=$Constants['Spalten']) {
+			  			   if (strlen($csvdata[0]) == 8) $date_time = DateTime::createFromFormat('d.m.y H:i:s', $csvdata[0]." ".$csvdata[1]);
+			  			   if (strlen($csvdata[0]) == 10) $date_time = DateTime::createFromFormat('d.m.Y H:i:s', $csvdata[0]." ".$csvdata[1]);
+	     				  	$monatsWerte[$row]['time']   = $date_time->getTimestamp();
+
+							// Array durchiterieren und Daten aus CSV Datei zuweisen
+							foreach ($Columns as $key => $value) {
+								$monatsWerte[$row][$key]	= $csvdata[$value];
+							}
+							if ($anzahlWR > 1) {
+									$monatsWerte[$row]['Pdc'] = 0;
+									$monatsWerte[$row]['Pac'] = 0;
+									$monatsWerte[$row]['DaySum'] = 0;
+									for ($WR=1; $WR<=$anzahlWR; $WR++) {
+										$targetPdc="WR".$WR."-Pdc";
+										$monatsWerte[$row][$targetPdc]=0;
+								   	for ($String=1; $String < $stringsProWR[$WR]; $String++) {
+											$sourcePdc="WR".$WR."-Pdc".$String;
+								      	$monatsWerte[$row][$targetPdc] = $monatsWerte[$row][$targetPdc] + $monatsWerte[$row][$sourcePdc];
+										}
+								   	$sourcePac 	  = "WR".$WR."-Pac";
+								   	$sourceDaySum = "WR".$WR."-DaySum";
+										$monatsWerte[$row]['Pdc']    = $monatsWerte[$row]['Pdc']    + $monatsWerte[$row][$targetPdc];
+										$monatsWerte[$row]['Pac']    = $monatsWerte[$row]['Pac']    + $monatsWerte[$row][$sourcePac];
+									   $monatsWerte[$row]['DaySum'] = $monatsWerte[$row]['DaySum'] + $monatsWerte[$row][$sourceDaySum];
+									}
+								}
+								if ($Niederhof) {
+								   $monatsWerte[$row]['NH1-DaySum'] = $monatsWerte[$row]['WR5-DaySum'] + $monatsWerte[$row]['WR6-DaySum'];
+									$monatsWerte[$row]['NH2-DaySum'] = $monatsWerte[$row]['WR1-DaySum'] + $monatsWerte[$row]['WR2-DaySum'];
+									$monatsWerte[$row]['NH3-DaySum'] = $monatsWerte[$row]['WR3-DaySum'] + $monatsWerte[$row]['WR4-DaySum'];
+								   $monatsWerte[$row]['NH1-Pdc']    = $monatsWerte[$row]['WR5-Pdc']    + $monatsWerte[$row]['WR6-Pdc'];
+									$monatsWerte[$row]['NH2-Pdc']    = $monatsWerte[$row]['WR1-Pdc']    + $monatsWerte[$row]['WR2-Pdc'];
+									$monatsWerte[$row]['NH3-Pdc']    = $monatsWerte[$row]['WR3-Pdc']    + $monatsWerte[$row]['WR4-Pdc'];
+								   $monatsWerte[$row]['NH1-Pac']    = $monatsWerte[$row]['WR5-Pac']    + $monatsWerte[$row]['WR6-Pac'];
+									$monatsWerte[$row]['NH2-Pac']    = $monatsWerte[$row]['WR1-Pac']    + $monatsWerte[$row]['WR2-Pac'];
+									$monatsWerte[$row]['NH3-Pac']    = $monatsWerte[$row]['WR3-Pac']    + $monatsWerte[$row]['WR4-Pac'];
+								}
+								if ($Wessow) {
+								   $monatsWerte[$row]['WS1-DaySum'] = $monatsWerte[$row]['WR1-DaySum'] + $monatsWerte[$row]['WR2-DaySum'];
+									$monatsWerte[$row]['WS2-DaySum'] = $monatsWerte[$row]['WR3-DaySum'] + $monatsWerte[$row]['WR4-DaySum'];
+								   $monatsWerte[$row]['WS1-Pdc']    = $monatsWerte[$row]['WR1-Pdc']    + $monatsWerte[$row]['WR2-Pdc'];
+									$monatsWerte[$row]['WS2-Pdc']    = $monatsWerte[$row]['WR3-Pdc']    + $monatsWerte[$row]['WR4-Pdc'];
+								   $monatsWerte[$row]['WS1-Pac']    = $monatsWerte[$row]['WR1-Pac']    + $monatsWerte[$row]['WR2-Pac'];
+									$monatsWerte[$row]['WS2-Pac']    = $monatsWerte[$row]['WR3-Pac']    + $monatsWerte[$row]['WR4-Pac'];
+								}
+								if ($Lindner) {
+								   $monatsWerte[$row]['Aktueller Bezug'] = $monatsWerte[$row]['Verbrauch-Pac'] - $monatsWerte[$row]['WR1-Pac'];
+								   $monatsWerte[$row]['Eigenverbrauch-DaySum'] = 0;
+								   $monatsWerte[$row]['Einspeisung-DaySum'] = 0;
+								}
+								$row++;
+					 		}  // if
+					 	}  // while
+	   		 	fclose($handle);
+	  				}  // if handle
+		 		}  // if file exists
+			}  // for-schleife days
+         IPS_LogMessage($_IPS['SELF'], "Einlesen $csvFile fertig, Zeilen $row");
 
 		/* Gesamtverbrauch zusammenaddieren
 		$aktuellerVerbrauchP 	= 	0;
