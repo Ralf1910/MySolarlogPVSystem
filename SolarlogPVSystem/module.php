@@ -66,7 +66,7 @@ class SolarlogPVSystem extends IPSModule {
 	public function Update() {
 		
 		set_time_limit (300);
-		ini_set('memory_limit', '1024M');
+		ini_set('memory_limit', '16M');
 		
 		$ftpServer   = $this->ReadPropertyString("ServerAdresse");
 		$ftpUserName = $this->ReadPropertyString("Username");
@@ -124,7 +124,7 @@ class SolarlogPVSystem extends IPSModule {
 	     				   	$monatsWerte[$row]['time']   = $date_time->getTimestamp();
 
 						   	// Daten aus der CSV in das monatsWerte Array überführen
-							$monatsWerte[$row]['WR1Pac'] = $csvdata[getValue($this->ReadPropertyString("WR1Pac"))];
+							$monatsWerte[$row]['WR1Pac'] = $csvdata[$this->ReadPropertyString("WR1Pac")];
 							$monatsWerte[$row]['WR1DaySum'] = $csvdata[getValue($this->ReadPropertyString("WR1DaySum"))];										  
   						    	IPS_LogMessage("SolarlogPVSystem", "Aktuelle Leistung".$monatsWerte[$row]['WR1Pac']."\n");
 							$row++;
