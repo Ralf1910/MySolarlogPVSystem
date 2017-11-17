@@ -7,7 +7,7 @@
 class SolarlogPVSystem extends IPSModule {
 	public function Create() {
 		// Diese Zeile nicht löschen.
-		parent::Create();
+		parent::Create(); 
 		$archiv = IPS_GetInstanceIDByName("Archiv", 0 );
 		// Verbraucher, Erzeuger und Batteriedaten konfigurieren
 		$this->RegisterPropertyInteger("Archiv",$archiv);
