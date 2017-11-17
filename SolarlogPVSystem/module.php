@@ -49,7 +49,7 @@ class SolarlogPVSystem extends IPSModule {
 		$this->RegisterPropertyString("WR2Temp", "");
 				
 		// Updates einstellen
-		$this->RegisterTimer("Update", 60*1000, 'PV_Update($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("Update", $this->ReadPropertyInteger("Update")*60*1000, 'PV_Update($_IPS[\'TARGET\']);');
 	}
 	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
 	public function ApplyChanges() {
@@ -68,7 +68,7 @@ class SolarlogPVSystem extends IPSModule {
 		
 		
 		//Timerzeit setzen in Minuten
-		$this->SetTimerInterval("Update", 60*1000);
+		$this->SetTimerInterval("Update", $this->ReadPropertyInteger("Update")*60*1000);
 	}
 	// Berechnung der jeweiligen Jahreswerte
 	private function RollierenderJahreswert(Integer $VariableID) {
