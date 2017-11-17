@@ -1,0 +1,21 @@
+{
+  "elements":
+  [
+	{ "type": "SelectInstance", "name": "Archiv", "caption": "Archiv" },
+	{ "type": "SelectVariable", "name": "ErzeugerP1", "caption": "Erzeuger 1 P" },
+	{ "type": "SelectVariable", "name": "ErzeugerW1", "caption": "Erzeuger 1 kWh/min" },
+	{ "type": "SelectVariable", "name": "ErzeugerP2", "caption": "Erzeuger 2 P" },
+	{ "type": "SelectVariable", "name": "ErzeugerW2", "caption": "Erzeuger 2 kWh/min" },
+	{ "type": "SelectVariable", "name": "ErzeugerP3", "caption": "Erzeuger 3 P" },
+	{ "type": "SelectVariable", "name": "ErzeugerW3", "caption": "Erzeuger 3 kWh/min" },
+	{ "type": "SelectVariable", "name": "VerbraucherP1", "caption": "Verbraucher 1 P" },
+	{ "type": "SelectVariable", "name": "VerbraucherW1", "caption": "Verbraucher 1 kWh/min" },
+	{ "type": "SelectVariable", "name": "VerbraucherP2", "caption": "Verbraucher 2 P" },
+	{ "type": "SelectVariable", "name": "VerbraucherW2", "caption": "Verbraucher 2 kWh/min" },
+	{ "type": "SelectVariable", "name": "VerbraucherP3", "caption": "Verbraucher 3 P" },
+	{ "type": "SelectVariable", "name": "VerbraucherW3", "caption": "Verbraucher 3 kWh/min" },
+	{ "type": "ValidationTextBox", "name": "Kapazitaet", "caption": "Kapazität(Wh)" },
+	{ "type": "ValidationTextBox", "name": "MaxLadeleistung", "caption": "Ladeleistung (W)" }
+
+  ]
+}
