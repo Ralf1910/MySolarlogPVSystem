@@ -20,6 +20,7 @@ class SolarlogPVSystem extends IPSModule {
 		$this->RegisterPropertyString("Password", "");
 		$this->RegisterPropertyString("RemoteDir", "");
 		$this->RegisterPropertyString("LocalDir", "");
+		
 		$this->RegisterPropertyString("WR1Pac", "");
 		$this->RegisterPropertyString("WR1DaySum", "");
 		$this->RegisterPropertyString("WR1Status", "");
@@ -31,6 +32,7 @@ class SolarlogPVSystem extends IPSModule {
 		$this->RegisterPropertyString("WR1Udc2", "");
 		$this->RegisterPropertyString("WR1Udc3", "");
 		$this->RegisterPropertyString("WR1Uac", "");
+		$this->RegisterPropertyString("WR1Temp", "");
 		
 		$this->RegisterPropertyString("WR2Pac", "");
 		$this->RegisterPropertyString("WR2DaySum", "");
@@ -43,6 +45,7 @@ class SolarlogPVSystem extends IPSModule {
 		$this->RegisterPropertyString("WR2Udc2", "");
 		$this->RegisterPropertyString("WR2Udc3", "");
 		$this->RegisterPropertyString("WR2Uac", "");
+		$this->RegisterPropertyString("WR2Temp", "");
 				
 		// Updates einstellen
 		$this->RegisterTimer("Update", 60*1000, 'PV_Update($_IPS[\'TARGET\']);');
@@ -80,7 +83,7 @@ class SolarlogPVSystem extends IPSModule {
 	public function Update() {
 		
 		set_time_limit (300);
-		ini_set('memory_limit', '16M');
+		ini_set('memory_limit', '64M');
 		
 		$ftpServer   = $this->ReadPropertyString("ServerAdresse");
 		$ftpUserName = $this->ReadPropertyString("Username");
