@@ -2,6 +2,7 @@
   "elements":
   [
 	{ "type": "SelectInstance", "name": "Archiv", "caption": "Archiv" },
+	{ "type": "IntervalBox", "name": "Update", "caption": "minutes" },
 	{ "type": "ValidationTextBox", "name": "Leistung", "caption": "Gesamtleistung (kWp)" },
 	{ "type": "ValidationTextBox", "name": "String1", "caption": "Leistung String 1(kWp)" },
 	{ "type": "ValidationTextBox", "name": "String2", "caption": "Leistung String 2(kWp)" },
