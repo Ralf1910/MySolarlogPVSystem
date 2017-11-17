@@ -66,6 +66,7 @@ class SolarlogPVSystem extends IPSModule {
 	public function Update() {
 		
 		set_time_limit (300);
+		ini_set('memory_limit', '1024M');
 		
 		$ftpServer   = $this->ReadPropertyString("ServerAdresse");
 		$ftpUserName = $this->ReadPropertyString("Username");
