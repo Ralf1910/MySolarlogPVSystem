@@ -10,6 +10,8 @@
 	{ "type": "ValidationTextBox", "name": "Username", "caption": "Benutzer" },
 	{ "type": "ValidationTextBox", "name": "Password", "caption": "Passwort" },
 	{ "type": "ValidationTextBox", "name": "RemoteDir", "caption": "Remote Verzeichnis" },
-	{ "type": "ValidationTextBox", "name": "LocalDir", "caption": "Lokales Verzeichnis" }
+	{ "type": "ValidationTextBox", "name": "LocalDir", "caption": "Lokales Verzeichnis" },
+	{ "type": "ValidationTextBox", "name": "WR1-Pac", "caption": "WR1-Pac (Spalte)" }  
+	  
   ]
 }
