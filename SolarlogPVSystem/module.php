@@ -68,7 +68,7 @@ class SolarlogPVSystem extends IPSModule {
 			// Login mit Benutzername und Passwort
 			$loginResult = ftp_login($connID, $ftpUserName, $ftpPassword);
 			
-			IPS_LogMessage($_IPS['SELF'], "Prüfe FTP-Server Verzeichnis ".$remoteDir." auf neue Dateien.\n");
+			IPS_LogMessage("SolarlogPVSystem", "Prüfe FTP-Server Verzeichnis ".$remoteDir." auf neue Dateien.\n");
 	    		$remoteDirContent = ftp_nlist($connID, "./".$remoteDir);
 	    		foreach($remoteDirContent as $index2 => $remoteFile) {
 				if (substr($remoteFile, -3) == "csv") {
@@ -78,19 +78,19 @@ class SolarlogPVSystem extends IPSModule {
 					if (file_exists($localFile)) $timeLocalModified = filemtime($localFile);
 			   		if (!file_exists($localFile) || $timeRemoteModified>$timeLocalModified) {
 			      			if (ftp_get($connID, $localFile, $remoteFile, FTP_BINARY)) {
-		   	 				IPS_LogMessage($_IPS['SELF'], $localFile." wurde erfolgreich geschrieben ");
+		   	 				IPS_LogMessage("SolarlogPVSystem", $localFile." wurde erfolgreich geschrieben ");
 	         	   				touch($localFile, $timeRemoteModified);
 						} else {
-		    					IPS_LogMessage($_IPS['SELF'], "Bei Datei $localFile ist in Fehler ist aufgetreten\n");
+		    					IPS_LogMessage("SolarlogPVSystem", "Bei Datei $localFile ist in Fehler ist aufgetreten\n");
 						}
 					}
 				}
 		 	}
 		} else {
-			IPS_LogMessage($_IPS['SELF'], "FTP Server nicht erreichbar!\n");
+			IPS_LogMessage("SolarlogPVSystem", "FTP Server nicht erreichbar!\n");
 		}
 
-		IPS_LogMessage($_IPS['SELF'],"Solarlog Dateien sind jetzt aktuell");
+		IPS_LogMessage("SolarlogPVSystem","Solarlog Dateien sind jetzt aktuell");
 		ftp_close($connID);
 
 		/* Gesamtverbrauch zusammenaddieren
