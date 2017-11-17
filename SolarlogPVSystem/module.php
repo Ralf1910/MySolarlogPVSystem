@@ -134,7 +134,7 @@ class SolarlogPVSystem extends IPSModule {
 			if (file_exists($csvFile)) {
 				if (($handle = fopen($csvFile, "r")) !== FALSE) {
 					while (($csvdata = fgetcsv($handle, 0, ";")) !== FALSE) {
-	   		     		$num = count($csvdata);
+	   		     			$num = count($csvdata);
 			  			if ($csvdata[0] != "#Datum" && $csvdata[0] != "#Date") {
 			  			   	if (strlen($csvdata[0]) == 8) $date_time = DateTime::createFromFormat('d.m.y H:i:s', $csvdata[0]." ".$csvdata[1]);
 			  			   	if (strlen($csvdata[0]) == 10) $date_time = DateTime::createFromFormat('d.m.Y H:i:s', $csvdata[0]." ".$csvdata[1]);
