@@ -20,8 +20,8 @@ class SolarlogPVSystem extends IPSModule {
 		$this->RegisterPropertyString("Password", "");
 		$this->RegisterPropertyString("RemoteDir", "");
 		$this->RegisterPropertyString("LocalDir", "");
-		$this->RegisterPropertyString("WR1-Pac", "");
-		$this->RegisterPropertyString("WR1-DaySum", "");
+		$this->RegisterPropertyString("WR1Pac", "");
+		$this->RegisterPropertyString("WR1DaySum", "");
 				
 		// Updates einstellen
 		$this->RegisterTimer("Update", 60*1000, 'PV_Update($_IPS[\'TARGET\']);');
@@ -114,8 +114,8 @@ class SolarlogPVSystem extends IPSModule {
 	     				   	$monatsWerte[$row]['time']   = $date_time->getTimestamp();
 
 						   	// Daten aus der CSV in das monatsWerte Array überführen
-							$monatsWerte[$row]['WR1-Pac'] = $csvdata[$this->ReadPropertyInteger("WR1-Pac")];
-							$monatsWerte[$row]['WR1-DaySum'] = $csvdata[$this->ReadPropertyInteger("WR1-DaySum")];										  
+							$monatsWerte[$row]['WR1Pac'] = $csvdata[$this->ReadPropertyInteger("WR1Pac")];
+							$monatsWerte[$row]['WR1DaySum'] = $csvdata[$this->ReadPropertyInteger("WR1DaySum")];										  
   						    $row++;
 						}  // if
 					 }  // while
