@@ -80,7 +80,7 @@ class SolarlogPVSystem extends IPSModule {
 		}
 		return (GetValue($VariableID) - $wertVor365d);
 	}
-	// Aktualisiert die Batteriedaten
+	// Aktualisiert die Daten der Solaranlage
 	public function Update() {
 		
 		set_time_limit (300);
@@ -125,56 +125,64 @@ class SolarlogPVSystem extends IPSModule {
 		ftp_close($connID);
 		
 		// Daten einlesen
-		$month=10;
-		$year=2017;
-		$monatsWerte = array();
-		$row = 0;
-		for ($day=1; $day<=cal_days_in_month(CAL_GREGORIAN, $month, $year); $day++) {
-			$csvFile = $localDir."9001\min".substr($year,2,2).str_pad($month, 2 ,'0', STR_PAD_LEFT).str_pad($day, 2 ,'0', STR_PAD_LEFT).".csv";
+		IPS_LogMessage("SolarlogPVSystem","Die Daten der Solarlog Dateien werden jetzt eingelesen");
+		for ($year=2000; $year<= date("Y"); $year++) {
+			for ($month=1; $month<=12; $month++) {
+				if ($year == date("Y") && $month > date("n")) break;
+				IPS_LogMessage("SolarlogPVSystem", "Lese die Daten aus ".$month."-".$year." ein);
+		
+				$monatsWerte = array();
+				$row = 0;
+				for ($day=1; $day<=cal_days_in_month(CAL_GREGORIAN, $month, $year); $day++) {
+					$csvFile = $localDir."9001\min".substr($year,2,2).str_pad($month, 2 ,'0', STR_PAD_LEFT).str_pad($day, 2 ,'0', STR_PAD_LEFT).".csv";
 
-			if (file_exists($csvFile)) {
-				if (($handle = fopen($csvFile, "r")) !== FALSE) {
-					while (($csvdata = fgetcsv($handle, 0, ";")) !== FALSE) {
-	   		     			$num = count($csvdata);
-			  			if ($csvdata[0] != "#Datum" && $csvdata[0] != "#Date") {
-			  			   	if (strlen($csvdata[0]) == 8) $date_time = DateTime::createFromFormat('d.m.y H:i:s', $csvdata[0]." ".$csvdata[1]);
-			  			   	if (strlen($csvdata[0]) == 10) $date_time = DateTime::createFromFormat('d.m.Y H:i:s', $csvdata[0]." ".$csvdata[1]);
-	     				   		$monatsWerte[$row]['time']   = $date_time->getTimestamp();
+					if (file_exists($csvFile)) {
+						if (($handle = fopen($csvFile, "r")) !== FALSE) {
+							while (($csvdata = fgetcsv($handle, 0, ";")) !== FALSE) {
+									$num = count($csvdata);
+								if ($csvdata[0] != "#Datum" && $csvdata[0] != "#Date") {
+									if (strlen($csvdata[0]) == 8) $date_time = DateTime::createFromFormat('d.m.y H:i:s', $csvdata[0]." ".$csvdata[1]);
+									if (strlen($csvdata[0]) == 10) $date_time = DateTime::createFromFormat('d.m.Y H:i:s', $csvdata[0]." ".$csvdata[1]);
+										$monatsWerte[$row]['time']   = $date_time->getTimestamp();
 
-						   	// Daten aus der CSV in das monatsWerte Array überführen
-							$monatsWerte[$row]['WR1Pac'] 	= $csvdata[$this->ReadPropertyString("WR1Pac")];
-							$monatsWerte[$row]['WR1DaySum'] = $csvdata[$this->ReadPropertyString("WR1DaySum")];
-							$monatsWerte[$row]['WR1Status'] = $csvdata[$this->ReadPropertyString("WR1Status")];
-							$monatsWerte[$row]['WR1Error'] 	= $csvdata[$this->ReadPropertyString("WR1Error")];
-							$monatsWerte[$row]['WR1Pdc1'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc1")];
-							$monatsWerte[$row]['WR1Pdc2'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc2")];
-							$monatsWerte[$row]['WR1Pdc3'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc3")];
-							$monatsWerte[$row]['WR1Udc1'] 	= $csvdata[$this->ReadPropertyString("WR1Udc1")];
-							$monatsWerte[$row]['WR1Udc2'] 	= $csvdata[$this->ReadPropertyString("WR1Udc2")];
-							$monatsWerte[$row]['WR1Udc3'] 	= $csvdata[$this->ReadPropertyString("WR1Udc3")];
-							$monatsWerte[$row]['WR1Uac'] 	= $csvdata[$this->ReadPropertyString("WR1Uac")];
-							
-							$monatsWerte[$row]['WR2Pac'] 	= $csvdata[$this->ReadPropertyString("WR2Pac")];
-							$monatsWerte[$row]['WR2DaySum'] = $csvdata[$this->ReadPropertyString("WR2DaySum")];
-							$monatsWerte[$row]['WR2Status'] = $csvdata[$this->ReadPropertyString("WR2Status")];
-							$monatsWerte[$row]['WR2Error'] 	= $csvdata[$this->ReadPropertyString("WR2Error")];
-							$monatsWerte[$row]['WR2Pdc1'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc1")];
-							$monatsWerte[$row]['WR2Pdc2'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc2")];
-							$monatsWerte[$row]['WR2Pdc3'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc3")];
-							$monatsWerte[$row]['WR2Udc1'] 	= $csvdata[$this->ReadPropertyString("WR2Udc1")];
-							$monatsWerte[$row]['WR2Udc2'] 	= $csvdata[$this->ReadPropertyString("WR2Udc2")];
-							$monatsWerte[$row]['WR2Udc3'] 	= $csvdata[$this->ReadPropertyString("WR2Udc3")];
-							$monatsWerte[$row]['WR2Uac'] 	= $csvdata[$this->ReadPropertyString("WR2Uac")];
-							$row++;
-						}  // if
-					 }  // while
-					IPS_LogMessage("SolarlogPVSystem", "Daten vom $csvFile eingelesen\n");
-	   		 	fclose($handle);
-	  			}  // if handle
-		 	}  // if file exists
-		}  // for-schleife days
-        IPS_LogMessage($_IPS['SELF'], "Einlesen fertig, Zeilen $row");
+									// Daten aus der CSV in das monatsWerte Array überführen
+									$monatsWerte[$row]['WR1Pac'] 	= $csvdata[$this->ReadPropertyString("WR1Pac")];
+									$monatsWerte[$row]['WR1DaySum'] = $csvdata[$this->ReadPropertyString("WR1DaySum")];
+									$monatsWerte[$row]['WR1Status'] = $csvdata[$this->ReadPropertyString("WR1Status")];
+									$monatsWerte[$row]['WR1Error'] 	= $csvdata[$this->ReadPropertyString("WR1Error")];
+									$monatsWerte[$row]['WR1Pdc1'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc1")];
+									$monatsWerte[$row]['WR1Pdc2'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc2")];
+									$monatsWerte[$row]['WR1Pdc3'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc3")];
+									$monatsWerte[$row]['WR1Udc1'] 	= $csvdata[$this->ReadPropertyString("WR1Udc1")];
+									$monatsWerte[$row]['WR1Udc2'] 	= $csvdata[$this->ReadPropertyString("WR1Udc2")];
+									$monatsWerte[$row]['WR1Udc3'] 	= $csvdata[$this->ReadPropertyString("WR1Udc3")];
+									$monatsWerte[$row]['WR1Uac'] 	= $csvdata[$this->ReadPropertyString("WR1Uac")];
 
+									$monatsWerte[$row]['WR2Pac'] 	= $csvdata[$this->ReadPropertyString("WR2Pac")];
+									$monatsWerte[$row]['WR2DaySum'] = $csvdata[$this->ReadPropertyString("WR2DaySum")];
+									$monatsWerte[$row]['WR2Status'] = $csvdata[$this->ReadPropertyString("WR2Status")];
+									$monatsWerte[$row]['WR2Error'] 	= $csvdata[$this->ReadPropertyString("WR2Error")];
+									$monatsWerte[$row]['WR2Pdc1'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc1")];
+									$monatsWerte[$row]['WR2Pdc2'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc2")];
+									$monatsWerte[$row]['WR2Pdc3'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc3")];
+									$monatsWerte[$row]['WR2Udc1'] 	= $csvdata[$this->ReadPropertyString("WR2Udc1")];
+									$monatsWerte[$row]['WR2Udc2'] 	= $csvdata[$this->ReadPropertyString("WR2Udc2")];
+									$monatsWerte[$row]['WR2Udc3'] 	= $csvdata[$this->ReadPropertyString("WR2Udc3")];
+									$monatsWerte[$row]['WR2Uac'] 	= $csvdata[$this->ReadPropertyString("WR2Uac")];
+									$row++;
+								}  // if
+					 		}  // while
+							IPS_LogMessage("SolarlogPVSystem", "Daten vom $csvFile eingelesen\n");
+	   		 				fclose($handle);
+	  					}  // if handle
+		 			}  // if file exists
+				}  // for-schleife days
+							   
+				array_multisort( $monatsWerte, SORT_ASC);
+        		
+				IPS_LogMessage($_IPS['SELF'], "Einlesen fertig, Zeilen $row");
+			} //for-schleife month
+		} //for-schleife-years
 		/* Gesamtverbrauch zusammenaddieren
 		$aktuellerVerbrauchP 	= 	0;
 		if ($this->ReadPropertyInteger("VerbraucherP1")>0) $aktuellerVerbrauchP += getValue($this->ReadPropertyInteger("VerbraucherP1"));
