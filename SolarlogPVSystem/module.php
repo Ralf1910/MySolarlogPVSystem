@@ -231,10 +231,10 @@ class SolarlogPVSystem extends IPSModule {
 		 			}  // if file exists
 				}  // for-schleife days
 							   
-				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetObjectIDByName("WR1 Leistung AC"), "WR1Pac");
-				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetObjectIDByName("WR1 Leistung DC"), "WR1Pdc1");
-				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetObjectIDByName("WR1 Wirkungsgrad"), "WR1Eff");
-				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetObjectIDByName("WR1 erzeugte Energie"), "WR1DaySum");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetIDforIdent("WR1Pac"), "WR1Pac");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetIDforIdent("WR1Pdc1"), "WR1Pdc1");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetIDforIdent("WR1Eff"), "WR1Eff");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this-GetIDforIdent("WR1DaySum"), "WR1DaySum");
 			
 			} //for-schleife month
 		} //for-schleife-years
