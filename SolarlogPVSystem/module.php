@@ -12,10 +12,10 @@ class SolarlogPVSystem extends IPSModule {
 		// Verbraucher, Erzeuger und Batteriedaten konfigurieren
 		$this->RegisterPropertyInteger("Archiv",$archiv);
 		$this->RegisterPropertyInteger("Update",1);
-		$this->RegisterPropertyInteger("Leistung", 0);
-		$this->RegisterPropertyInteger("String1", 0);
-		$this->RegisterPropertyInteger("String2", 0);
-		$this->RegisterPropertyInteger("String3", 0);
+		$this->RegisterPropertyInteger("LeistungGesamt", 0);
+		$this->RegisterPropertyInteger("LeistungWR1", 0);
+		$this->RegisterPropertyInteger("LeistungWR2", 0);
+		$this->RegisterPropertyInteger("LeistungWR3", 0);
 		$this->RegisterPropertyString("ServerAdresse", "");
 		$this->RegisterPropertyString("Username", "");
 		$this->RegisterPropertyString("Password", "");
@@ -63,11 +63,14 @@ class SolarlogPVSystem extends IPSModule {
 			AC_SetAggregationType($archiv, $this->GetIDforIdent("PVErzeugteEnergie"), 1);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungAC", "WR1 Leistung AC", "", 20), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1ErzeugteEnergie", "WR1 erzeugte Energie", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC", "WR1 Leistung DC", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC1", "WR1 Leistung DC1", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC2", "WR1 Leistung DC2", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC3", "WR1 Leistung DC3", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC1", "WR1 Spannung DC1", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC2", "WR1 Spannung DC2", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC3", "WR1 Spannung DC3", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1Temperatur", "WR1 Temperatur", "", 20), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1Wirkungsgrad", "WR1 Wirkungsgrad", "", 20), true);
-			
-			
-		
 		}
 		
 		
