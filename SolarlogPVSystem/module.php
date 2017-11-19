@@ -58,7 +58,7 @@ class SolarlogPVSystem extends IPSModule {
 		if (IPS_GetKernelRunlevel ( ) == 10103) {
 			$archiv = IPS_GetInstanceIDByName("Archiv", 0 );
 			// Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werd
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("PVLeistung", "PV Leistung AC", "", 10), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("PVLeistungAC", "PV Leistung AC", "", 10), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVErzeugteEnergie", "PV erzeugte Energie", "", 20), true);
 			AC_SetAggregationType($archiv, $this->GetIDforIdent("PVErzeugteEnergie"), 1);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungAC", "WR1 Leistung AC", "", 30), true);
@@ -231,10 +231,10 @@ class SolarlogPVSystem extends IPSModule {
 		 			}  // if file exists
 				}  // for-schleife days
 							   
-				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetIDforIdent("WR1Pac"), "WR1Pac");
-				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetIDforIdent("WR1Pdc1"), "WR1Pdc1");
-				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetIDforIdent("WR1Eff"), "WR1Eff");
-				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this-GetIDforIdent("WR1DaySum"), "WR1DaySum");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetIDforIdent("WR1LeistungAC"), "WR1Pac");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetIDforIdent("WR1LeistungDC"), "WR1Pdc1");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetIDforIdent("WR1Wirkungsgradf"), "WR1Eff");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetIDforIdent("WR1ErzeugteEnergie"), "WR1DaySum");
 			
 			} //for-schleife month
 		} //for-schleife-years
