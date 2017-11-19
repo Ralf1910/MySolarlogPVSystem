@@ -63,14 +63,14 @@ class SolarlogPVSystem extends IPSModule {
 			AC_SetAggregationType($archiv, $this->GetIDforIdent("PVErzeugteEnergie"), 1);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungAC", "WR1 Leistung AC", "", 30), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1ErzeugteEnergie", "WR1 erzeugte Energie", "", 40), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC1", "WR1 Leistung DC1", "", 50), true);
+			if (strlen($this->ReadPropertyString("WR1Pdc1"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC1", "WR1 Leistung DC1", "", 50), true);
 			if (strlen($this->ReadPropertyString("WR1Pdc2"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC2", "WR1 Leistung DC2", "", 60), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC3", "WR1 Leistung DC3", "", 70), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC1", "WR1 Spannung DC1", "", 80), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC2", "WR1 Spannung DC2", "", 90), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC3", "WR1 Spannung DC3", "", 100), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1Temperatur", "WR1 Temperatur", "", 110), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1Wirkungsgrad", "WR1 Wirkungsgrad", "", 120), true);
+			if (strlen($this->ReadPropertyString("WR1Pdc3"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC3", "WR1 Leistung DC3", "", 70), true);
+			if (strlen($this->ReadPropertyString("WR1Udc1"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC1", "WR1 Spannung DC1", "", 80), true);
+			if (strlen($this->ReadPropertyString("WR1Udc2"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC2", "WR1 Spannung DC2", "", 90), true);
+			if (strlen($this->ReadPropertyString("WR1Udc3"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC3", "WR1 Spannung DC3", "", 100), true);
+			if (strlen($this->ReadPropertyString("WR1Temp"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1Temperatur", "WR1 Temperatur", "", 110), true);
+			if (strlen($this->ReadPropertyString("WR1Uac"))>0)  AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1Wirkungsgrad", "WR1 Wirkungsgrad", "", 120), true);
 		}
 		
 		
@@ -205,15 +205,15 @@ class SolarlogPVSystem extends IPSModule {
 									// Daten aus der CSV in das monatsWerte Array überführen
 									$monatsWerte[$row]['WR1Pac'] 	= $csvdata[$WR1PacIdx];
 									$monatsWerte[$row]['WR1DaySum'] = $csvdata[$WR1DaySumIdx] / 1000 + $zwischenWerte['WR1DaySum'];;
-									$monatsWerte[$row]['WR1Status'] = $csvdata[$WR1StatusIdx];
-									$monatsWerte[$row]['WR1Error'] 	= $csvdata[$WR1ErrorIdx];
-									$monatsWerte[$row]['WR1Pdc1'] 	= $csvdata[$WR1Pdc1Idx];
-									//$monatsWerte[$row]['WR1Pdc2'] 	= $csvdata[$WR1Pdc2Idx];
-									//$monatsWerte[$row]['WR1Pdc3'] 	= $csvdata[$WR1Pdc3Idx];
-									$monatsWerte[$row]['WR1Udc1'] 	= $csvdata[$WR1Udc1Idx];
-									//$monatsWerte[$row]['WR1Udc2'] 	= $csvdata[$WR1Udc2Idx];
-									//$monatsWerte[$row]['WR1Udc3'] 	= $csvdata[$WR1Udc3Idx];
-									$monatsWerte[$row]['WR1Uac'] 	= $csvdata[$WR1UacIdx];
+									if ($WR1StatusIdx<>0) $monatsWerte[$row]['WR1Status'] 	= $csvdata[$WR1StatusIdx];
+									if ($WR1ErrorIdx<>0) $monatsWerte[$row]['WR1Error'] 	= $csvdata[$WR1ErrorIdx];
+									if ($WR1Pdc1Idx<>0) $monatsWerte[$row]['WR1Pdc1'] 	= $csvdata[$WR1Pdc1Idx];
+									if ($WR1Pdc2Idx<>0) $monatsWerte[$row]['WR1Pdc2'] 	= $csvdata[$WR1Pdc2Idx];
+									if ($WR1Pdc3Idx<>0) $monatsWerte[$row]['WR1Pdc3'] 	= $csvdata[$WR1Pdc3Idx];
+									if ($WR1Udc1Idx<>0) $monatsWerte[$row]['WR1Udc1'] 	= $csvdata[$WR1Udc1Idx];
+									if ($WR1Udc2Idx<>0) $monatsWerte[$row]['WR1Udc2'] 	= $csvdata[$WR1Udc2Idx];
+									if ($WR1Udc3Idx<>0) $monatsWerte[$row]['WR1Udc3'] 	= $csvdata[$WR1Udc3Idx];
+									if ($WR1UacIdx<>0) $monatsWerte[$row]['WR1Uac'] 	= $csvdata[$WR1UacIdx];
 
 									if ($monatsWerte[$row]['WR1Pdc1'] > 0 )
 										$monatsWerte[$row]['WR1Eff']= $monatsWerte[$row]['WR1Pac']*100 / $monatsWerte[$row]['WR1Pdc1'];
