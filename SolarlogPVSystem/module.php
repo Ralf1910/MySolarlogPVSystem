@@ -173,15 +173,12 @@ class SolarlogPVSystem extends IPSModule {
 									$row++;
 								}  // if
 					 		}  // while
-							IPS_LogMessage("SolarlogPVSystem", "Daten vom $csvFile eingelesen\n");
 	   		 				fclose($handle);
 	  					}  // if handle
 		 			}  // if file exists
 				}  // for-schleife days
 							   
 				array_multisort( $monatsWerte, SORT_ASC);
-        		
-				IPS_LogMessage($_IPS['SELF'], "Einlesen fertig, Zeilen $row");
 			} //for-schleife month
 		} //for-schleife-years
 		/* Gesamtverbrauch zusammenaddieren
