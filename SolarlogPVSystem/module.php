@@ -87,6 +87,36 @@ class SolarlogPVSystem extends IPSModule {
 		}
 		return (GetValue($VariableID) - $wertVor365d);
 	}
+	// Umwandeln der ExcelSpalten in Zahlen
+	private function getIndex(String $index) {
+		if (strlen($index) == 1)
+			return (ord(strtoupper($index))-64) + 1;
+		if (strlen($index) == 2)
+			return (ord(strtoupper(substr($index,0,1)))-64)*26 + (ord(strtoupper(substr($index,1,1)))-64) + 1;
+		return 0;
+	}
+	
+	private function monatsWerteSpeichern($monatsWerte, $year, $month, $zielVariableID, $arrayKey) {
+	//Array richtig sortieren für IP-Symcon
+	
+		array_multisort( $monatsWerte, SORT_ASC);
+
+		// Jetzt wird die entsprechende Historie Datei geschrieben
+
+		$max = sizeof($monatsWerte);
+		$tempMonatsWert = 0;
+		if ($max > 0 ) {
+			$csvFile = "C:\\IP-Symcon\\db\\".$year."\\".str_pad($month, 2 ,'0', STR_PAD_LEFT)."\\".$zielVariableID.".csv";
+			$fp = fopen($csvFile, 'w');
+			for($i=0; $i<$max; $i++) {
+				if ($i==0 || $tempMonatsWert<>$monatsWerte[$i][$arrayKey])
+					fputs($fp, $monatsWerte[$i]['time'].",".$monatsWerte[$i][$arrayKey].PHP_EOL);
+					$tempMonatsWert = $monatsWerte[$i][$arrayKey];
+			}
+			fclose($fp);
+		}
+	}
+	
 	// Aktualisiert die Daten der Solaranlage
 	public function Update() {
 		
@@ -136,8 +166,12 @@ class SolarlogPVSystem extends IPSModule {
 		IPS_LogMessage("SolarlogPVSystem","Die Daten der Solarlog Dateien werden jetzt eingelesen");
 		
 		// Buchstaben in Indexwerte umwandeln.
-		$WR1PacIdx = getIndex($this->ReadPropertyString("WR1Pac"));
-		$WRDaySumIdx = getIndex($this->ReadPropertyString("WR1DaySum"));
+		$WR1PacIdx = $this->getIndex($this->ReadPropertyString("WR1Pac"));
+		$WRDaySumIdx = $this->getIndex($this->ReadPropertyString("WR1DaySum"));
+		
+		$zwischenWerte = array();
+		$zwischenWerte['WR1DaySum'] = 0;
+		$zwischenWerte['WR2DaySum'] = 0;
 		
 		for ($year=2000; $year<= date("Y"); $year++) {
 			for ($month=1; $month<=12; $month++) {
@@ -151,6 +185,7 @@ class SolarlogPVSystem extends IPSModule {
 
 					if (file_exists($csvFile)) {
 						if (($handle = fopen($csvFile, "r")) !== FALSE) {
+							$firstRowThisDay = $row;
 							while (($csvdata = fgetcsv($handle, 0, ";")) !== FALSE) {
 									$num = count($csvdata);
 								if ($csvdata[0] != "#Datum" && $csvdata[0] != "#Date") {
@@ -160,7 +195,7 @@ class SolarlogPVSystem extends IPSModule {
 
 									// Daten aus der CSV in das monatsWerte Array überführen
 									$monatsWerte[$row]['WR1Pac'] 	= $csvdata[$WR1PacIdx];
-									$monatsWerte[$row]['WR1DaySum'] = $csvdata[];
+									$monatsWerte[$row]['WR1DaySum'] = $csvdata[$WR1DaySumIdx] / 1000 + $zwischenWerte['WR1DaySum'];;
 									$monatsWerte[$row]['WR1Status'] = $csvdata[$this->ReadPropertyString("WR1Status")];
 									$monatsWerte[$row]['WR1Error'] 	= $csvdata[$this->ReadPropertyString("WR1Error")];
 									$monatsWerte[$row]['WR1Pdc1'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc1")];
@@ -171,6 +206,11 @@ class SolarlogPVSystem extends IPSModule {
 									$monatsWerte[$row]['WR1Udc3'] 	= $csvdata[$this->ReadPropertyString("WR1Udc3")];
 									$monatsWerte[$row]['WR1Uac'] 	= $csvdata[$this->ReadPropertyString("WR1Uac")];
 
+									if ($monatsWerte[$row]['WR1Pdc1']) > 0 )
+										$monatsWerte[$row]['WR1Eff']= $monatsWerte[$row]['WR1Pac']*100 / $monatsWerte[$row]['WR1Pdc1'];
+									else
+										$monatsWerte[$row]['WR1Eff']=0;
+									
 									$monatsWerte[$row]['WR2Pac'] 	= $csvdata[$this->ReadPropertyString("WR2Pac")];
 									$monatsWerte[$row]['WR2DaySum'] = $csvdata[$this->ReadPropertyString("WR2DaySum")];
 									$monatsWerte[$row]['WR2Status'] = $csvdata[$this->ReadPropertyString("WR2Status")];
@@ -185,12 +225,17 @@ class SolarlogPVSystem extends IPSModule {
 									$row++;
 								}  // if
 					 		}  // while
+							$zwischenWerte['WR1DaySum'] = $monatsWerte[$firstRowThisDay]['WR1DaySum'];
 	   		 				fclose($handle);
 	  					}  // if handle
 		 			}  // if file exists
 				}  // for-schleife days
 							   
-				array_multisort( $monatsWerte, SORT_ASC);
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetObjectIDByName("WR1 Leistung AC"), "WR1Pac");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetObjectIDByName("WR1 Leistung DC"), "WR1Pdc1");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetObjectIDByName("WR1 Wirkungsgrad"), "WR1Eff");
+				$this->monatsWerteSpeichern($monatsWerte, $year, $month, $this->GetObjectIDByName("WR1 erzeugte Energie"), "WR1DaySum");
+			
 			} //for-schleife month
 		} //for-schleife-years
 		/* Gesamtverbrauch zusammenaddieren
