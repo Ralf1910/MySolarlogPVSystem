@@ -58,8 +58,8 @@ class SolarlogPVSystem extends IPSModule {
 		if (IPS_GetKernelRunlevel ( ) == 10103) {
 			$archiv = IPS_GetInstanceIDByName("Archiv", 0 );
 			// Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werd
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("PVLeistung", "Gesamtleistung AC", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVErzeugteEnergie", "Gesamte erzeugte Energie", "", 60), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("PVLeistung", "PV Leistung AC", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVErzeugteEnergie", "PV erzeugte Energie", "", 60), true);
 			AC_SetAggregationType($archiv, $this->GetIDforIdent("PVErzeugteEnergie"), 1);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungAC", "WR1 Leistung AC", "", 20), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1ErzeugteEnergie", "WR1 erzeugte Energie", "", 20), true);
@@ -67,11 +67,7 @@ class SolarlogPVSystem extends IPSModule {
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1Wirkungsgrad", "WR1 Wirkungsgrad", "", 20), true);
 			
 			
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("pvLeistungString1", "PV - aktuelle Leistung String 1", "", 30), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("pvLeistungString2", "PV - aktuelle Leistung String 2", "", 40), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("pvLeistungString3", "PV - Aktuelle Leistung String 3", "", 50), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("pvErzeugteEnergie", "PV - erzeugte Energie", "", 60), true);
-			
+		
 		}
 		
 		
