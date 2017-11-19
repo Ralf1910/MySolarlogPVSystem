@@ -90,9 +90,9 @@ class SolarlogPVSystem extends IPSModule {
 	// Umwandeln der ExcelSpalten in Zahlen
 	private function getIndex(String $index) {
 		if (strlen($index) == 1)
-			return (ord(strtoupper($index))-64) + 1;
+			return (ord(strtoupper($index))-64) - 1;
 		if (strlen($index) == 2)
-			return (ord(strtoupper(substr($index,0,1)))-64)*26 + (ord(strtoupper(substr($index,1,1)))-64) + 1;
+			return (ord(strtoupper(substr($index,0,1)))-64)*26 + (ord(strtoupper(substr($index,1,1)))-64) - 1;
 		return 0;
 	}
 	
