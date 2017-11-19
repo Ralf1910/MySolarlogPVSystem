@@ -58,19 +58,19 @@ class SolarlogPVSystem extends IPSModule {
 		if (IPS_GetKernelRunlevel ( ) == 10103) {
 			$archiv = IPS_GetInstanceIDByName("Archiv", 0 );
 			// Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werd
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("PVLeistung", "PV Leistung AC", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVErzeugteEnergie", "PV erzeugte Energie", "", 60), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("PVLeistung", "PV Leistung AC", "", 10), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVErzeugteEnergie", "PV erzeugte Energie", "", 20), true);
 			AC_SetAggregationType($archiv, $this->GetIDforIdent("PVErzeugteEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungAC", "WR1 Leistung AC", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1ErzeugteEnergie", "WR1 erzeugte Energie", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC1", "WR1 Leistung DC1", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC2", "WR1 Leistung DC2", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC3", "WR1 Leistung DC3", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC1", "WR1 Spannung DC1", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC2", "WR1 Spannung DC2", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC3", "WR1 Spannung DC3", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1Temperatur", "WR1 Temperatur", "", 20), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1Wirkungsgrad", "WR1 Wirkungsgrad", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungAC", "WR1 Leistung AC", "", 30), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1ErzeugteEnergie", "WR1 erzeugte Energie", "", 40), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC1", "WR1 Leistung DC1", "", 50), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC2", "WR1 Leistung DC2", "", 60), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC3", "WR1 Leistung DC3", "", 70), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC1", "WR1 Spannung DC1", "", 80), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC2", "WR1 Spannung DC2", "", 90), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC3", "WR1 Spannung DC3", "", 100), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1Temperatur", "WR1 Temperatur", "", 110), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1Wirkungsgrad", "WR1 Wirkungsgrad", "", 120), true);
 		}
 		
 		
@@ -130,10 +130,15 @@ class SolarlogPVSystem extends IPSModule {
 		}
 
 		IPS_LogMessage("SolarlogPVSystem","Solarlog Dateien sind jetzt aktuell");
-		ftp_close($connID);
+		// ftp_close($connID);
 		
 		// Daten einlesen
 		IPS_LogMessage("SolarlogPVSystem","Die Daten der Solarlog Dateien werden jetzt eingelesen");
+		
+		// Buchstaben in Indexwerte umwandeln.
+		$WR1PacIdx = getIndex($this->ReadPropertyString("WR1Pac"));
+		$WRDaySumIdx = getIndex($this->ReadPropertyString("WR1DaySum"));
+		
 		for ($year=2000; $year<= date("Y"); $year++) {
 			for ($month=1; $month<=12; $month++) {
 				if ($year == date("Y") && $month > date("n")) break;
@@ -154,8 +159,8 @@ class SolarlogPVSystem extends IPSModule {
 										$monatsWerte[$row]['time']   = $date_time->getTimestamp();
 
 									// Daten aus der CSV in das monatsWerte Array überführen
-									$monatsWerte[$row]['WR1Pac'] 	= $csvdata[$this->ReadPropertyString("WR1Pac")];
-									$monatsWerte[$row]['WR1DaySum'] = $csvdata[$this->ReadPropertyString("WR1DaySum")];
+									$monatsWerte[$row]['WR1Pac'] 	= $csvdata[$WR1PacIdx];
+									$monatsWerte[$row]['WR1DaySum'] = $csvdata[];
 									$monatsWerte[$row]['WR1Status'] = $csvdata[$this->ReadPropertyString("WR1Status")];
 									$monatsWerte[$row]['WR1Error'] 	= $csvdata[$this->ReadPropertyString("WR1Error")];
 									$monatsWerte[$row]['WR1Pdc1'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc1")];
