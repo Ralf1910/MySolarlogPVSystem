@@ -61,16 +61,28 @@ class SolarlogPVSystem extends IPSModule {
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("PVLeistungAC", "PV Leistung AC", "", 10), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVErzeugteEnergie", "PV erzeugte Energie", "", 20), true);
 			AC_SetAggregationType($archiv, $this->GetIDforIdent("PVErzeugteEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungAC", "WR1 Leistung AC", "", 30), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1ErzeugteEnergie", "WR1 erzeugte Energie", "", 40), true);
-			if (strlen($this->ReadPropertyString("WR1Pdc1"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC1", "WR1 Leistung DC1", "", 50), true);
-			if (strlen($this->ReadPropertyString("WR1Pdc2"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC2", "WR1 Leistung DC2", "", 60), true);
-			if (strlen($this->ReadPropertyString("WR1Pdc3"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC3", "WR1 Leistung DC3", "", 70), true);
-			if (strlen($this->ReadPropertyString("WR1Udc1"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC1", "WR1 Spannung DC1", "", 80), true);
-			if (strlen($this->ReadPropertyString("WR1Udc2"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC2", "WR1 Spannung DC2", "", 90), true);
-			if (strlen($this->ReadPropertyString("WR1Udc3"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC3", "WR1 Spannung DC3", "", 100), true);
-			if (strlen($this->ReadPropertyString("WR1Temp"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1Temperatur", "WR1 Temperatur", "", 110), true);
-			if (strlen($this->ReadPropertyString("WR1Uac"))>0)  AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1Wirkungsgrad", "WR1 Wirkungsgrad", "", 120), true);
+			
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungAC", "WR1 Leistung AC", "", 100), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1ErzeugteEnergie", "WR1 erzeugte Energie", "", 120), true);
+			if (strlen($this->ReadPropertyString("WR1Pdc1"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC1", "WR1 Leistung DC1", "", 130), true);
+			if (strlen($this->ReadPropertyString("WR1Pdc2"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC2", "WR1 Leistung DC2", "", 130), true);
+			if (strlen($this->ReadPropertyString("WR1Pdc3"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC3", "WR1 Leistung DC3", "", 130), true);
+			if (strlen($this->ReadPropertyString("WR1Udc1"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC1", "WR1 Spannung DC1", "", 140), true);
+			if (strlen($this->ReadPropertyString("WR1Udc2"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC2", "WR1 Spannung DC2", "", 140), true);
+			if (strlen($this->ReadPropertyString("WR1Udc3"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC3", "WR1 Spannung DC3", "", 140), true);
+			if (strlen($this->ReadPropertyString("WR1Temp"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1Temperatur", "WR1 Temperatur", "", 150), true);
+			if (strlen($this->ReadPropertyString("WR1Uac"))>0)  AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1Wirkungsgrad", "WR1 Wirkungsgrad", "", 160), true);
+			
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2LeistungAC", "WR2 Leistung AC", "", 230), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2ErzeugteEnergie", "WR2 erzeugte Energie", "", 240), true);
+			if (strlen($this->ReadPropertyString("WR2Pdc1"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2LeistungDC1", "WR2 Leistung DC1", "", 230), true);
+			if (strlen($this->ReadPropertyString("WR2Pdc2"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2LeistungDC2", "WR2 Leistung DC2", "", 230), true);
+			if (strlen($this->ReadPropertyString("WR2Pdc3"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2LeistungDC3", "WR2 Leistung DC3", "", 230), true);
+			if (strlen($this->ReadPropertyString("WR2Udc1"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2SpannungDC1", "WR2 Spannung DC1", "", 240), true);
+			if (strlen($this->ReadPropertyString("WR2Udc2"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2SpannungDC2", "WR2 Spannung DC2", "", 240), true);
+			if (strlen($this->ReadPropertyString("WR2Udc3"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2SpannungDC3", "WR2 Spannung DC3", "", 240), true);
+			if (strlen($this->ReadPropertyString("WR2Temp"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2Temperatur", "WR2 Temperatur", "", 250), true);
+			if (strlen($this->ReadPropertyString("WR2Uac"))>0)  AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2Wirkungsgrad", "WR2 Wirkungsgrad", "", 260), true);
 		}
 		
 		
@@ -166,7 +178,7 @@ class SolarlogPVSystem extends IPSModule {
 		IPS_LogMessage("SolarlogPVSystem","Die Daten der Solarlog Dateien werden jetzt eingelesen");
 		
 		// Buchstaben in Indexwerte umwandeln.
-		$WR1PacIdx 		= $this->getIndex($this->ReadPropertyString("WR1Pac"));
+		$WR1PacIdx 	= $this->getIndex($this->ReadPropertyString("WR1Pac"));
 		$WR1DaySumIdx 	= $this->getIndex($this->ReadPropertyString("WR1DaySum"));
 		$WR1StatusIdx 	= $this->getIndex($this->ReadPropertyString("WR1Status"));
 		$WR1ErrorIdx 	= $this->getIndex($this->ReadPropertyString("WR1Error"));
@@ -176,7 +188,19 @@ class SolarlogPVSystem extends IPSModule {
 		$WR1Udc1Idx 	= $this->getIndex($this->ReadPropertyString("WR1Udc1"));
 		$WR1Udc2Idx 	= $this->getIndex($this->ReadPropertyString("WR1Udc2"));
 		$WR1Udc3Idx 	= $this->getIndex($this->ReadPropertyString("WR1Udc3"));
-		$WR1UacIdx 		= $this->getIndex($this->ReadPropertyString("WR1Uac"));
+		$WR1UacIdx 	= $this->getIndex($this->ReadPropertyString("WR1Uac"));
+		
+		$WR2PacIdx 	= $this->getIndex($this->ReadPropertyString("WR2Pac"));
+		$WR2DaySumIdx 	= $this->getIndex($this->ReadPropertyString("WR2DaySum"));
+		$WR2StatusIdx 	= $this->getIndex($this->ReadPropertyString("WR2Status"));
+		$WR2ErrorIdx 	= $this->getIndex($this->ReadPropertyString("WR2Error"));
+		$WR2Pdc1Idx 	= $this->getIndex($this->ReadPropertyString("WR2Pdc1"));
+		$WR2Pdc2Idx 	= $this->getIndex($this->ReadPropertyString("WR2Pdc2"));
+		$WR2Pdc3Idx 	= $this->getIndex($this->ReadPropertyString("WR2Pdc3"));
+		$WR2Udc1Idx 	= $this->getIndex($this->ReadPropertyString("WR2Udc1"));
+		$WR2Udc2Idx 	= $this->getIndex($this->ReadPropertyString("WR2Udc2"));
+		$WR2Udc3Idx 	= $this->getIndex($this->ReadPropertyString("WR2Udc3"));
+		$WR2UacIdx 	= $this->getIndex($this->ReadPropertyString("WR2Uac"));
 		
 		$zwischenWerte = array();
 		$zwischenWerte['WR1DaySum'] = 0;
@@ -220,21 +244,27 @@ class SolarlogPVSystem extends IPSModule {
 									else
 										$monatsWerte[$row]['WR1Eff']=0;
 									
-									$monatsWerte[$row]['WR2Pac'] 	= $csvdata[$this->ReadPropertyString("WR2Pac")];
-									$monatsWerte[$row]['WR2DaySum'] = $csvdata[$this->ReadPropertyString("WR2DaySum")];
-									$monatsWerte[$row]['WR2Status'] = $csvdata[$this->ReadPropertyString("WR2Status")];
-									$monatsWerte[$row]['WR2Error'] 	= $csvdata[$this->ReadPropertyString("WR2Error")];
-									$monatsWerte[$row]['WR2Pdc1'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc1")];
-									$monatsWerte[$row]['WR2Pdc2'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc2")];
-									$monatsWerte[$row]['WR2Pdc3'] 	= $csvdata[$this->ReadPropertyString("WR2Pdc3")];
-									$monatsWerte[$row]['WR2Udc1'] 	= $csvdata[$this->ReadPropertyString("WR2Udc1")];
-									$monatsWerte[$row]['WR2Udc2'] 	= $csvdata[$this->ReadPropertyString("WR2Udc2")];
-									$monatsWerte[$row]['WR2Udc3'] 	= $csvdata[$this->ReadPropertyString("WR2Udc3")];
-									$monatsWerte[$row]['WR2Uac'] 	= $csvdata[$this->ReadPropertyString("WR2Uac")];
+									$monatsWerte[$row]['WR2Pac'] 	= $csvdata[$WR2PacIdx];
+									$monatsWerte[$row]['WR2DaySum'] = $csvdata[$WR2DaySumIdx] / 1000 + $zwischenWerte['WR2DaySum'];;
+									if ($WR2StatusIdx<>0) $monatsWerte[$row]['WR2Status'] 	= $csvdata[$WR2StatusIdx];
+									if ($WR2ErrorIdx<>0) $monatsWerte[$row]['WR2Error'] 	= $csvdata[$WR2ErrorIdx];
+									if ($WR2Pdc1Idx<>0) $monatsWerte[$row]['WR2Pdc1'] 	= $csvdata[$WR2Pdc1Idx];
+									if ($WR2Pdc2Idx<>0) $monatsWerte[$row]['WR2Pdc2'] 	= $csvdata[$WR2Pdc2Idx];
+									if ($WR2Pdc3Idx<>0) $monatsWerte[$row]['WR2Pdc3'] 	= $csvdata[$WR2Pdc3Idx];
+									if ($WR2Udc1Idx<>0) $monatsWerte[$row]['WR2Udc1'] 	= $csvdata[$WR2Udc1Idx];
+									if ($WR2Udc2Idx<>0) $monatsWerte[$row]['WR2Udc2'] 	= $csvdata[$WR2Udc2Idx];
+									if ($WR2Udc3Idx<>0) $monatsWerte[$row]['WR2Udc3'] 	= $csvdata[$WR2Udc3Idx];
+									if ($WR2UacIdx<>0) $monatsWerte[$row]['WR2Uac'] 	= $csvdata[$WR2UacIdx];
+
+									if ($monatsWerte[$row]['WR2Pdc1'] > 0 )
+										$monatsWerte[$row]['WR2Eff']= $monatsWerte[$row]['WR2Pac']*100 / $monatsWerte[$row]['WR2Pdc1'];
+									else
+										$monatsWerte[$row]['WR2Eff']=0;
 									$row++;
 								}  // if
 					 		}  // while
 							$zwischenWerte['WR1DaySum'] = $monatsWerte[$firstRowThisDay]['WR1DaySum'];
+							$zwischenWerte['WR2DaySum'] = $monatsWerte[$firstRowThisDay]['WR2DaySum'];
 	   		 				fclose($handle);
 	  					}  // if handle
 		 			}  // if file exists
@@ -248,16 +278,17 @@ class SolarlogPVSystem extends IPSModule {
 			} //for-schleife month
 		} //for-schleife-years
 		
-		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1LeistungAC"));
+		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1LeistungAC")));
 		sleep(5);
-		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1LeistungDC1"));
+		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1LeistungDC1")));
 		sleep(5);
-		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1Wirkungsgrad"));
+		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1Wirkungsgrad")));
 		sleep(5);
-		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1ErzeugteEnergie"));
+		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1ErzeugteEnergie")));
 		
 		// Zählerwerte in die Variablen schreiben
 		SetValueFloat($this->GetIDforIdent("WR1ErzeugteEnergie"), $zwischenWerte['WR1DaySum']);
+		SetValueFloat($this->GetIDforIdent("WR2ErzeugteEnergie"), $zwischenWerte['WR2DaySum']);
 		
 		
 		/* Gesamtverbrauch zusammenaddieren
