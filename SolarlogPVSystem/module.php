@@ -255,11 +255,12 @@ class SolarlogPVSystem extends IPSModule {
 									if ($WR2Udc2Idx<>0) $monatsWerte[$row]['WR2Udc2'] 	= $csvdata[$WR2Udc2Idx];
 									if ($WR2Udc3Idx<>0) $monatsWerte[$row]['WR2Udc3'] 	= $csvdata[$WR2Udc3Idx];
 									if ($WR2UacIdx<>0) $monatsWerte[$row]['WR2Uac'] 	= $csvdata[$WR2UacIdx];
-
-									if ($monatsWerte[$row]['WR2Pdc1'] > 0 )
-										$monatsWerte[$row]['WR2Eff']= $monatsWerte[$row]['WR2Pac']*100 / $monatsWerte[$row]['WR2Pdc1'];
-									else
-										$monatsWerte[$row]['WR2Eff']=0;
+									
+									if ($WR2Pdc1Idx<>0)
+										if ($monatsWerte[$row]['WR2Pdc1'] > 0 )
+											$monatsWerte[$row]['WR2Eff']= $monatsWerte[$row]['WR2Pac']*100 / $monatsWerte[$row]['WR2Pdc1'];
+										else
+											$monatsWerte[$row]['WR2Eff']=0;
 									$row++;
 								}  // if
 					 		}  // while
