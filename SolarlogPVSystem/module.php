@@ -130,7 +130,7 @@ class SolarlogPVSystem extends IPSModule {
 		for ($year=2000; $year<= date("Y"); $year++) {
 			for ($month=1; $month<=12; $month++) {
 				if ($year == date("Y") && $month > date("n")) break;
-				IPS_LogMessage("SolarlogPVSystem", "Lese die Daten aus ".$month."-".$year." ein);
+				IPS_LogMessage("SolarlogPVSystem", "Lese die Daten aus ".$month."-".$year." ein");
 		
 				$monatsWerte = array();
 				$row = 0;
