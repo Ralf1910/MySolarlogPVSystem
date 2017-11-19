@@ -93,14 +93,15 @@ class SolarlogPVSystem extends IPSModule {
 		$localDir    = $this->ReadPropertyString("LocalDir");
 		
 		// Daten vom FTP Server holen
-		 $connID = ftp_connect($ftpServer);
-		//$connID = false;
+		// $connID = ftp_connect($ftpServer);
+		$connID = false;
 		if ($connID != false) {
 			// Login mit Benutzername und Passwort
 			$loginResult = ftp_login($connID, $ftpUserName, $ftpPassword);
 			
 			IPS_LogMessage("SolarlogPVSystem", "Prüfe FTP-Server Verzeichnis ".$remoteDir." auf neue Dateien.\n");
-	    		$remoteDirContent = ftp_nlist($connID, "./".$remoteDir);
+	    		ftp_chdir($connID, "./".$remoteDir);
+			$remoteDirContent = ftp_nlist($connID, ".");
 	    		foreach($remoteDirContent as $index2 => $remoteFile) {
 				if (substr($remoteFile, -3) == "csv") {
 					$localFile = $localDir.$remoteFile;
