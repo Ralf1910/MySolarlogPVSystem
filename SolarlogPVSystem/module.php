@@ -64,7 +64,7 @@ class SolarlogPVSystem extends IPSModule {
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungAC", "WR1 Leistung AC", "", 30), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1ErzeugteEnergie", "WR1 erzeugte Energie", "", 40), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC1", "WR1 Leistung DC1", "", 50), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC2", "WR1 Leistung DC2", "", 60), true);
+			if (strlen($this->ReadPropertyString("WR1Pdc2"))>0) AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC2", "WR1 Leistung DC2", "", 60), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1LeistungDC3", "WR1 Leistung DC3", "", 70), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC1", "WR1 Spannung DC1", "", 80), true);
 			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR1SpannungDC2", "WR1 Spannung DC2", "", 90), true);
