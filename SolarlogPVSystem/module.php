@@ -167,7 +167,7 @@ class SolarlogPVSystem extends IPSModule {
 		
 		// Buchstaben in Indexwerte umwandeln.
 		$WR1PacIdx = $this->getIndex($this->ReadPropertyString("WR1Pac"));
-		$WRDaySumIdx = $this->getIndex($this->ReadPropertyString("WR1DaySum"));
+		$WR1DaySumIdx = $this->getIndex($this->ReadPropertyString("WR1DaySum"));
 		
 		$zwischenWerte = array();
 		$zwischenWerte['WR1DaySum'] = 0;
