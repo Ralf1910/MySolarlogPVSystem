@@ -247,6 +247,19 @@ class SolarlogPVSystem extends IPSModule {
 			
 			} //for-schleife month
 		} //for-schleife-years
+		
+		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1LeistungAC"));
+		sleep(5);
+		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1LeistungDC1"));
+		sleep(5);
+		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1Wirkungsgrad"));
+		sleep(5);
+		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1ErzeugteEnergie"));
+		
+		// Zählerwerte in die Variablen schreiben
+		SetValueFloat($this->GetIDforIdent("WR1ErzeugteEnergie"), $zwischenWerte['WR1DaySum']);
+		
+		
 		/* Gesamtverbrauch zusammenaddieren
 		$aktuellerVerbrauchP 	= 	0;
 		if ($this->ReadPropertyInteger("VerbraucherP1")>0) $aktuellerVerbrauchP += getValue($this->ReadPropertyInteger("VerbraucherP1"));
