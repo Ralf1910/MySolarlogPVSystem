@@ -166,8 +166,17 @@ class SolarlogPVSystem extends IPSModule {
 		IPS_LogMessage("SolarlogPVSystem","Die Daten der Solarlog Dateien werden jetzt eingelesen");
 		
 		// Buchstaben in Indexwerte umwandeln.
-		$WR1PacIdx = $this->getIndex($this->ReadPropertyString("WR1Pac"));
-		$WR1DaySumIdx = $this->getIndex($this->ReadPropertyString("WR1DaySum"));
+		$WR1PacIdx 		= $this->getIndex($this->ReadPropertyString("WR1Pac"));
+		$WR1DaySumIdx 	= $this->getIndex($this->ReadPropertyString("WR1DaySum"));
+		$WR1StatusIdx 	= $this->getIndex($this->ReadPropertyString("WR1Status"));
+		$WR1ErrorIdx 	= $this->getIndex($this->ReadPropertyString("WR1Error"));
+		$WR1Pdc1Idx 	= $this->getIndex($this->ReadPropertyString("WR1Pdc1"));
+		$WR1Pdc2Idx 	= $this->getIndex($this->ReadPropertyString("WR1Pdc2"));
+		$WR1Pdc3Idx 	= $this->getIndex($this->ReadPropertyString("WR1Pdc3"));
+		$WR1Udc1Idx 	= $this->getIndex($this->ReadPropertyString("WR1Udc1"));
+		$WR1Udc2Idx 	= $this->getIndex($this->ReadPropertyString("WR1Udc2"));
+		$WR1Udc3Idx 	= $this->getIndex($this->ReadPropertyString("WR1Udc3"));
+		$WR1UacIdx 		= $this->getIndex($this->ReadPropertyString("WR1Uac"));
 		
 		$zwischenWerte = array();
 		$zwischenWerte['WR1DaySum'] = 0;
@@ -196,15 +205,15 @@ class SolarlogPVSystem extends IPSModule {
 									// Daten aus der CSV in das monatsWerte Array überführen
 									$monatsWerte[$row]['WR1Pac'] 	= $csvdata[$WR1PacIdx];
 									$monatsWerte[$row]['WR1DaySum'] = $csvdata[$WR1DaySumIdx] / 1000 + $zwischenWerte['WR1DaySum'];;
-									$monatsWerte[$row]['WR1Status'] = $csvdata[$this->ReadPropertyString("WR1Status")];
-									$monatsWerte[$row]['WR1Error'] 	= $csvdata[$this->ReadPropertyString("WR1Error")];
-									$monatsWerte[$row]['WR1Pdc1'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc1")];
-									$monatsWerte[$row]['WR1Pdc2'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc2")];
-									$monatsWerte[$row]['WR1Pdc3'] 	= $csvdata[$this->ReadPropertyString("WR1Pdc3")];
-									$monatsWerte[$row]['WR1Udc1'] 	= $csvdata[$this->ReadPropertyString("WR1Udc1")];
-									$monatsWerte[$row]['WR1Udc2'] 	= $csvdata[$this->ReadPropertyString("WR1Udc2")];
-									$monatsWerte[$row]['WR1Udc3'] 	= $csvdata[$this->ReadPropertyString("WR1Udc3")];
-									$monatsWerte[$row]['WR1Uac'] 	= $csvdata[$this->ReadPropertyString("WR1Uac")];
+									$monatsWerte[$row]['WR1Status'] = $csvdata[$WR1StatusIdx];
+									$monatsWerte[$row]['WR1Error'] 	= $csvdata[$WR1ErrorIdx];
+									$monatsWerte[$row]['WR1Pdc1'] 	= $csvdata[$WR1Pdc1Idx];
+									//$monatsWerte[$row]['WR1Pdc2'] 	= $csvdata[$WR1Pdc2Idx];
+									//$monatsWerte[$row]['WR1Pdc3'] 	= $csvdata[$WR1Pdc3Idx];
+									$monatsWerte[$row]['WR1Udc1'] 	= $csvdata[$WR1Udc1Idx];
+									//$monatsWerte[$row]['WR1Udc2'] 	= $csvdata[$WR1Udc2Idx];
+									//$monatsWerte[$row]['WR1Udc3'] 	= $csvdata[$WR1Udc3Idx];
+									$monatsWerte[$row]['WR1Uac'] 	= $csvdata[$WR1UacIdx];
 
 									if ($monatsWerte[$row]['WR1Pdc1'] > 0 )
 										$monatsWerte[$row]['WR1Eff']= $monatsWerte[$row]['WR1Pac']*100 / $monatsWerte[$row]['WR1Pdc1'];
