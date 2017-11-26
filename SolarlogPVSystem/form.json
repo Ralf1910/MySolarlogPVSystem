@@ -31,7 +31,7 @@
 	{ "type": "ValidationTextBox", "name": "WR1Udc3", "caption": "WR1-Udc3 (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR1Temp", "caption": "WR1-Temp (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR1Uac", "caption": "WR1-Uac (Spalte)" }, 
-	  { "type": "Label", "label": "Importdaten für die CSV Datei (Wechselrichter 2)." },
+	{ "type": "Label", "label": "Importdaten für die CSV Datei (Wechselrichter 2)." },
 	{ "type": "ValidationTextBox", "name": "WR2Pac", "caption": "WR2-Pac (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR2DaySum", "caption": "WR2-DaySum (Spalte)" },
 	{ "type": "ValidationTextBox", "name": "WR2Status", "caption": "WR2-Status (Spalte)" },
@@ -43,6 +43,19 @@
 	{ "type": "ValidationTextBox", "name": "WR2Udc2", "caption": "WR2-Udc2 (Spalte)" }, 
 	{ "type": "ValidationTextBox", "name": "WR2Udc3", "caption": "WR2-Udc3 (Spalte)" }, 
 	{ "type": "ValidationTextBox", "name": "WR2Temp", "caption": "WR2-Temp (Spalte)" }, 
-	{ "type": "ValidationTextBox", "name": "WR2Uac", "caption": "WR2-Uac (Spalte)" } 
+	{ "type": "ValidationTextBox", "name": "WR2Uac", "caption": "WR2-Uac (Spalte)" },
+	{ "type": "Label", "label": "Importdaten für die CSV Datei (Wechselrichter 3)." },
+	{ "type": "ValidationTextBox", "name": "WR3Pac", "caption": "WR3-Pac (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR3DaySum", "caption": "WR3-DaySum (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR3Status", "caption": "WR3-Status (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR3Error", "caption": "WR3-Error (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR3Pdc1", "caption": "WR3-Pdc1 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR3Pdc2", "caption": "WR3-Pdc2 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR3Pdc3", "caption": "WR3-Pdc3 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR3Udc1", "caption": "WR3-Udc1 (Spalte)" },
+	{ "type": "ValidationTextBox", "name": "WR3Udc2", "caption": "WR3-Udc2 (Spalte)" }, 
+	{ "type": "ValidationTextBox", "name": "WR3Udc3", "caption": "WR3-Udc3 (Spalte)" }, 
+	{ "type": "ValidationTextBox", "name": "WR3Temp", "caption": "WR3-Temp (Spalte)" }, 
+	{ "type": "ValidationTextBox", "name": "WR3Uac", "caption": "WR3-Uac (Spalte)" } 
   ]
 }
