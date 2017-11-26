@@ -72,7 +72,7 @@ class SolarlogPVSystem extends IPSModule {
 						
 			// Jetzt die Variablen für den Wechselrichter 1
 			if ($this->ReadPropertyInteger("LeistungWR1")>0) {
-				if (strlen($this->ReadPropertyString("WR1Pac"))>0) 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1LeistungAC", "WR1 Leistung AC", "Elektrizitaet.Leistung", 100), true);
+				if (strlen($this->ReadPropertyString("WR1Pac"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1LeistungAC", "WR1 Leistung AC", "Elektrizitaet.Leistung", 100), true);
 				if (strlen($this->ReadPropertyString("WR1DaySum"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1ErzeugteEnergie", "WR1 erzeugte Energie", "Elektrizitaet.Verbrauch", 110), true);
 				if (strlen($this->ReadPropertyString("WR1DaySum"))>0)	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1RollierenderJahresertrag", "WR1 rollierender Jahresertrag", "Elektrizitaet.Verbrauch", 120), true);
 				if (strlen($this->ReadPropertyString("WR1Pdc1"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR1LeistungDC1", "WR1 Leistung DC1", "Elektrizitaet.Leistung", 130), true);
@@ -90,20 +90,20 @@ class SolarlogPVSystem extends IPSModule {
 			
 			// Jetzt die Variablen für den Wechselrichter 2
 			if ($this->ReadPropertyInteger("LeistungWR2")>0) {
-				if (strlen($this->ReadPropertyString("WR2Pac"))>0) 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2LeistungAC", "WR2 Leistung AC", "", 200), true);
-				if (strlen($this->ReadPropertyString("WR2DaySum"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2ErzeugteEnergie", "WR2 erzeugte Energie", "", 210), true);
-				if (strlen($this->ReadPropertyString("WR2DaySum"))>0)	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2RollierenderJahresertrag", "WR2 rollierender Jahresertrag", "", 220), true);
-				if (strlen($this->ReadPropertyString("WR2Pdc1"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2LeistungDC1", "WR2 Leistung DC1", "", 230), true);
-				if (strlen($this->ReadPropertyString("WR2Pdc2"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2LeistungDC2", "WR2 Leistung DC2", "", 230), true);
-				if (strlen($this->ReadPropertyString("WR2Pdc3"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2LeistungDC3", "WR2 Leistung DC3", "", 230), true);
-				if (strlen($this->ReadPropertyString("WR2Udc1"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2SpannungDC1", "WR2 Spannung DC1", "", 240), true);
-				if (strlen($this->ReadPropertyString("WR2Udc2"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2SpannungDC2", "WR2 Spannung DC2", "", 240), true);
-				if (strlen($this->ReadPropertyString("WR2Udc3"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2SpannungDC3", "WR2 Spannung DC3", "", 240), true);
-				if (strlen($this->ReadPropertyString("WR2Temp"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2Temperatur", "WR2 Temperatur", "", 250), true);
-				if (strlen($this->ReadPropertyString("WR2Uac"))>0)  	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2Wirkungsgrad", "WR2 Wirkungsgrad", "", 260), true);
-				if (strlen($this->ReadPropertyString("WR2Uac"))>0)  	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2SpannungAC", "WR2 Spannung AC", "", 270), true);
-				if (strlen($this->ReadPropertyString("WR2Status"))>0)  	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2Status", "WR2 Status", "", 280), true);
-				if (strlen($this->ReadPropertyString("WR2Error"))>0)  	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2Fehlermeldung", "WR2 Fehlermeldung", "", 290), true);
+				if (strlen($this->ReadPropertyString("WR2Pac"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2LeistungAC", "WR2 Leistung AC", "Elektrizitaet.Leistung", 200), true);
+				if (strlen($this->ReadPropertyString("WR2DaySum"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2ErzeugteEnergie", "WR2 erzeugte Energie", "Elektrizitaet.Verbrauch", 210), true);
+				if (strlen($this->ReadPropertyString("WR2DaySum"))>0)	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2RollierenderJahresertrag", "WR2 rollierender Jahresertrag", "Elektrizitaet.Verbrauch", 220), true);
+				if (strlen($this->ReadPropertyString("WR2Pdc1"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2LeistungDC1", "WR2 Leistung DC1", "Elektrizitaet.Leistung", 230), true);
+				if (strlen($this->ReadPropertyString("WR2Pdc2"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2LeistungDC2", "WR2 Leistung DC2", "Elektrizitaet.Leistung", 230), true);
+				if (strlen($this->ReadPropertyString("WR2Pdc3"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2LeistungDC3", "WR2 Leistung DC3", "Elektrizitaet.Leistung", 230), true);
+				if (strlen($this->ReadPropertyString("WR2Udc1"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2SpannungDC1", "WR2 Spannung DC1", "Elektrizitaet.Spannung_DC", 240), true);
+				if (strlen($this->ReadPropertyString("WR2Udc2"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2SpannungDC2", "WR2 Spannung DC2", "Elektrizitaet.Spannung_DC", 240), true);
+				if (strlen($this->ReadPropertyString("WR2Udc3"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2SpannungDC3", "WR2 Spannung DC3", "Elektrizitaet.Spannung_DC", 240), true);
+				if (strlen($this->ReadPropertyString("WR2Temp"))>0) 	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2Temperatur", "WR2 Temperatur", "~Temperature", 250), true);
+				if (strlen($this->ReadPropertyString("WR2Uac"))>0)  	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2Wirkungsgrad", "WR2 Wirkungsgrad", "Elektrizitaet.Wirkungsgrad", 260), true);
+				if (strlen($this->ReadPropertyString("WR2Uac"))>0)  	AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("WR2SpannungAC", "WR2 Spannung AC", "Elektrizitaet.Spannung_230V", 270), true);
+				if (strlen($this->ReadPropertyString("WR2Status"))>0)  	AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2Status", "WR2 Status", "", 280), true);
+				if (strlen($this->ReadPropertyString("WR2Error"))>0)  	AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("WR2Fehlermeldung", "WR2 Fehlermeldung", "", 290), true);
 			}
 		
 		
