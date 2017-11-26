@@ -65,10 +65,10 @@ class SolarlogPVSystem extends IPSModule {
 			$archiv = IPS_GetInstanceIDByName("Archiv", 0 );
 			// Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werd
 			// Zunächst die Variablen für die Gesamtanlage
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("PVLeistungAC", "PV Leistung AC", "", 10), true);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVErzeugteEnergie", "PV erzeugte Energie", "", 20), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVLeistungAC", "PV Leistung AC", "Elektrizitaet.Leistung", 10), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVErzeugteEnergie", "PV erzeugte Energie", "Elektrizitaet.Verbrauch", 20), true);
 			AC_SetAggregationType($archiv, $this->GetIDforIdent("PVErzeugteEnergie"), 1);
-			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVRollierenderJahresertrag", "PV rollierender Jahresertrag", "", 30), true);
+			AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("PVRollierenderJahresertrag", "PV rollierender Jahresertrag", "Elektrizitaet.Verbrauch", 30), true);
 						
 			// Jetzt die Variablen für den Wechselrichter 1
 			if ($this->ReadPropertyInteger("LeistungWR1")>0) {
@@ -115,6 +115,7 @@ class SolarlogPVSystem extends IPSModule {
 		//Timerzeit setzen in Minuten
 		$this->SetTimerInterval("Update", $this->ReadPropertyInteger("Update")*60*1000);
 	}
+	
 	// Berechnung der jeweiligen Jahreswerte
 	private function RollierenderJahreswert(Integer $VariableID) {
 		//Den Datensatz von vor 365 Tagen abfragen (zur Berücksichtigung von Schaltjahren)
@@ -125,6 +126,7 @@ class SolarlogPVSystem extends IPSModule {
 		}
 		return (GetValue($VariableID) - $wertVor365d);
 	}
+	
 	// Umwandeln der ExcelSpalten in Zahlen
 	private function getIndex(String $index) {
 		if (strlen($index) == 1)
@@ -154,6 +156,7 @@ class SolarlogPVSystem extends IPSModule {
 			fclose($fp);
 		}
 	}
+	
 	
 	// Aktualisiert die Daten der Solaranlage
 	public function Update() {
@@ -290,8 +293,8 @@ class SolarlogPVSystem extends IPSModule {
 									$row++;
 								}  // if
 					 		}  // while
-							$zwischenWerte['WR1DaySum'] = $monatsWerte[$firstRowThisDay]['WR1DaySum'];
-							$zwischenWerte['WR2DaySum'] = $monatsWerte[$firstRowThisDay]['WR2DaySum'];
+							$zwischenWerte['WR1DaySum'] = $monatsWerte[2]['WR1DaySum'];
+							$zwischenWerte['WR2DaySum'] = $monatsWerte[2]['WR2DaySum'];
 	   		 				fclose($handle);
 	  					}  // if handle
 		 			}  // if file exists
@@ -313,93 +316,5 @@ class SolarlogPVSystem extends IPSModule {
 		sleep(5);
 		if (AC_ReAggregateVariable( $archiv, $this->GetIDforIdent("WR1ErzeugteEnergie")));
 		
-		// Zählerwerte in die Variablen schreiben
-		SetValueFloat($this->GetIDforIdent("WR1ErzeugteEnergie"), $zwischenWerte['WR1DaySum']);
-		SetValueFloat($this->GetIDforIdent("WR2ErzeugteEnergie"), $zwischenWerte['WR2DaySum']);
-		
-		
-		/* Gesamtverbrauch zusammenaddieren
-		$aktuellerVerbrauchP 	= 	0;
-		if ($this->ReadPropertyInteger("VerbraucherP1")>0) $aktuellerVerbrauchP += getValue($this->ReadPropertyInteger("VerbraucherP1"));
-		if ($this->ReadPropertyInteger("VerbraucherP2")>0) $aktuellerVerbrauchP += getValue($this->ReadPropertyInteger("VerbraucherP2"));
-		if ($this->ReadPropertyInteger("VerbraucherP3")>0) $aktuellerVerbrauchP += getValue($this->ReadPropertyInteger("VerbraucherP3"));
-		$aktuellerVerbrauchW 	= 	0;
-		if ($this->ReadPropertyInteger("VerbraucherW1")>0) $aktuellerVerbrauchW += getValue($this->ReadPropertyInteger("VerbraucherW1"));
-		if ($this->ReadPropertyInteger("VerbraucherW2")>0) $aktuellerVerbrauchW += getValue($this->ReadPropertyInteger("VerbraucherW2"));
-		if ($this->ReadPropertyInteger("VerbraucherW3")>0) $aktuellerVerbrauchW += getValue($this->ReadPropertyInteger("VerbraucherW3"));
-		// Gesamterzeugung zusammenaddieren
-		$aktuelleErzeugungP		=	0;
-		if ($this->ReadPropertyInteger("ErzeugerP1")>0) $aktuelleErzeugungP += getValue($this->ReadPropertyInteger("ErzeugerP1"));
-		if ($this->ReadPropertyInteger("ErzeugerP2")>0) $aktuelleErzeugungP += getValue($this->ReadPropertyInteger("ErzeugerP2"));
-		if ($this->ReadPropertyInteger("ErzeugerP3")>0) $aktuelleErzeugungP += getValue($this->ReadPropertyInteger("ErzeugerP3"));
-		$aktuelleErzeugungW		=	0;
-		if ($this->ReadPropertyInteger("ErzeugerW1")>0) $aktuelleErzeugungW += getValue($this->ReadPropertyInteger("ErzeugerW1"));
-		if ($this->ReadPropertyInteger("ErzeugerW2")>0) $aktuelleErzeugungW += getValue($this->ReadPropertyInteger("ErzeugerW2"));
-		if ($this->ReadPropertyInteger("ErzeugerW3")>0) $aktuelleErzeugungW += getValue($this->ReadPropertyInteger("ErzeugerW3"));
-		$bezogeneEnergie			= 	getValue($this->GetIDforIdent("bezogeneEnergie"));
-		$eingespeisteEnergie		=	getValue($this->GetIDforIdent("eingespeisteEnergie"));
-		$gespeicherteEnergie		=	getValue($this->GetIDforIdent("gespeicherteEnergie"));
-		$direktverbrauchteEnergie	= 	getValue($this->GetIDforIdent("selbstverbrauchteEnergie"));
-		$maxLadeleistung			= 	$this->ReadPropertyInteger("MaxLadeleistung");
-		$kapazitaet					=	$this->ReadPropertyInteger("Kapazitaet")/1000;
-		$fuellstand					=	getValue($this->GetIDforIdent("fuellstand"));
-		// Berechnung der Leistungswerte
-		if ($aktuellerVerbrauchP > $aktuelleErzeugungP) {
-			if ($fuellstand <= 0) {
-				setValue($this->GetIDforIdent("aktuellerNetzbezug"), max($aktuellerVerbrauchP - $aktuelleErzeugungP,0));
-				setValue($this->GetIDforIdent("aktuelleLadeleistung"), 0);
-				setValue($this->GetIDforIdent("aktuelleEinspeisung"), 0);
-			} else {
-				setValue($this->GetIDforIdent("aktuellerNetzbezug"), max($aktuellerVerbrauchP - $aktuelleErzeugungP - $maxLadeleistung,0));
-				setValue($this->GetIDforIdent("aktuelleLadeleistung"), max($aktuelleErzeugungP - $aktuellerVerbrauchP, -1*$maxLadeleistung));
-				setValue($this->GetIDforIdent("aktuelleEinspeisung"), 0);
-			}
-		} else {
-			if ($fuellstand >= $kapazitaet) {
-				setValue($this->GetIDforIdent("aktuellerNetzbezug"), 0);
-				setValue($this->GetIDforIdent("aktuelleLadeleistung"), 0);
-				setValue($this->GetIDforIdent("aktuelleEinspeisung"), max($aktuelleErzeugungP - $aktuellerVerbrauchP,0));
-			} else {
-				setValue($this->GetIDforIdent("aktuellerNetzbezug"), 0);
-				setValue($this->GetIDforIdent("aktuelleLadeleistung"), min($aktuelleErzeugungP - $aktuellerVerbrauchP, $maxLadeleistung));
-				setValue($this->GetIDforIdent("aktuelleEinspeisung"), max($aktuelleErzeugungP - $aktuellerVerbrauchP - $maxLadeleistung,0));
-			}
-		}
-		// Berechnung, der Energiewerte
-		if ($aktuellerVerbrauchW > $aktuelleErzeugungW) {
-			if ($fuellstand <= 0) {
-				setValue($this->GetIDforIdent("bezogeneEnergie"), $bezogeneEnergie + max($aktuellerVerbrauchW - $aktuelleErzeugungW,0));
-				setValue($this->GetIDforIdent("fuellstand"), 0);
-			} else {
-				setValue($this->GetIDforIdent("bezogeneEnergie"), $bezogeneEnergie + max($aktuellerVerbrauchW - $aktuelleErzeugungW - $maxLadeleistung/60000,0));
-				setValue($this->GetIDforIdent("fuellstand"), max($fuellstand + max($aktuelleErzeugungW - $aktuellerVerbrauchW, -1*$maxLadeleistung/60000), 0));
-			}
-		} else {
-			if ($fuellstand >= $kapazitaet) {
-				setValue($this->GetIDforIdent("eingespeisteEnergie"), $eingespeisteEnergie + max($aktuelleErzeugungW - $aktuellerVerbrauchW,0));
-				setValue($this->GetIDforIdent("fuellstand"), $kapazitaet);
-			} else {
-				setValue($this->GetIDforIdent("eingespeisteEnergie"), $eingespeisteEnergie + max($aktuelleErzeugungW - $aktuellerVerbrauchW - $maxLadeleistung/60000,0));
-				setValue($this->GetIDforIdent("fuellstand"), min($fuellstand + min($aktuelleErzeugungW - $aktuellerVerbrauchW, $maxLadeleistung/60000), $kapazitaet));
-				setValue($this->GetIDforIdent("gespeicherteEnergie"), $gespeicherteEnergie + min($aktuelleErzeugungW - $aktuellerVerbrauchW, $maxLadeleistung/60000));
-			}
-		}
-		SetValue($this->GetIDforIdent("fuellstandProzent"), round((getValue($this->GetIDforIdent("fuellstand"))*100 / $kapazitaet)/5)*5);
-		SetValue($this->GetIDforIdent("aktuelleEigennutzung"), min($aktuellerVerbrauchP, $aktuelleErzeugungP));
-		SetValue($this->GetIDforIdent("selbstverbrauchteEnergie"), $direktverbrauchteEnergie + min($aktuellerVerbrauchW, $aktuelleErzeugungW));
-		if (Date("i", time()) == 00) {
-			SetValue($this->GetIDforIdent("zyklen"), getValue($this->GetIDforIdent("gespeicherteEnergie")) / $kapazitaet);
-			if (($bezogeneEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie)>0)
-				SetValue($this->GetIDforIdent("EVGV"), ($direktverbrauchteEnergie + $gespeicherteEnergie)*100 / ($bezogeneEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie));
-			if (($eingespeisteEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie)>0)
-				SetValue($this->GetIDforIdent("EVGP"), ($direktverbrauchteEnergie + $gespeicherteEnergie)*100 / ($eingespeisteEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie));
-			SetValue($this->GetIDforIdent("rollierendeEingespeisteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("eingespeisteEnergie")));
-			SetValue($this->GetIDforIdent("rollierendeSelbstverbrauchteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("selbstverbrauchteEnergie")));
-			SetValue($this->GetIDforIdent("rollierendeBezogeneEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("bezogeneEnergie")));
-			SetValue($this->GetIDforIdent("rollierendeGespeicherteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("gespeicherteEnergie")));
-			SetValue($this->GetIDforIdent("rollierendeEVGV"), $this->RollierenderJahreswert($this->GetIDforIdent("EVGV")));
-			SetValue($this->GetIDforIdent("rollierendeEVGP"), $this->RollierenderJahreswert($this->GetIDforIdent("EVGP")));
-			SetValue($this->GetIDforIdent("rollierendeZyklen"), $this->RollierenderJahreswert($this->GetIDforIdent("zyklen")));
-		} */
 	}
  }
